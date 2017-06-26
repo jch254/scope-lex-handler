@@ -14,6 +14,7 @@
         "cloudwatch:*",
         "lambda:*",
         "events:*",
+        "iam:*",
         "ssm:DescribeParameters"
       ]
     },

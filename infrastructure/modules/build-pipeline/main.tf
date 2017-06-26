@@ -22,6 +22,7 @@ resource "aws_iam_role" "codebuild_role" {
 EOF
 }
 
+# TODO: Refine codebuild_policy perms
 data "template_file" "codebuild_policy" {
   template = "${file("${path.module}/codebuild-role-policy.tpl")}"
 
