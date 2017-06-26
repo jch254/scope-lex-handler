@@ -17,7 +17,7 @@ export async function handler(event: any, context: Context, callback: Callback) 
     
     spotifyApi.setAccessToken(authData.body['access_token']);
     
-    const trackData = await spotifyApi.searchTracks('artist:Kendrick Lamar');
+    const trackData = await spotifyApi.searchTracks('artist:Kanye West');
 
     console.log(JSON.stringify(trackData.body));
 
