@@ -1,0 +1,16 @@
+.DS_Store
+node_modules/
+dist/
+.vscode/
+.history/
+.idea
+.terraform/
+*.iml
+*.log*
+logs
+typings.json
+npm-debug.log
+yarn-error.log
+terraform.tfstate*
+src/**/*.js
+artifacts.zip

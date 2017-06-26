@@ -1,0 +1,31 @@
+{
+  "name": "beatbot-fulfillment-handler",
+  "version": "1.0.0",
+  "description": "BeatBot fulfillment handler",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon -e ts -w src/ -x 'ts-node src/'",
+    "build": "rimraf dist/ && tsc",
+    "lint": "tslint --type-check --project tsconfig.json || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jch254/beatbot-fulfillment-handler"
+  },
+  "author": "Jordan Hornblow",
+  "dependencies": {
+    "spotify-web-api-node": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^0.0.14",
+    "@types/node": "^8.0.2",
+    "@types/node-fetch": "^1.6.7",
+    "nodemon": "^1.11.0",
+    "rimraf": "^2.6.1",
+    "ts-node": "^3.0.6",
+    "tslint": "^5.4.3",
+    "tslint-config-airbnb": "^5.2.0",
+    "tsutils": "1.6.0",
+    "typescript": "^2.3.4"
+  }
+}
