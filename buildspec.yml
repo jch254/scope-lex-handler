@@ -20,6 +20,8 @@ env:
 phases:
   install:
     commands:
+      # Workaround until CodeBuild/CodePipeline retains file permissions
+      - find ./scripts -name "*.bash" -exec chmod +x {} \;
       - ./scripts/install.bash
 
   pre_build:
