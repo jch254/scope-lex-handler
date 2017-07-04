@@ -28,12 +28,12 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       // TODO: Send getRecommendations request using track, genre and artist ids to Spotify API
       // TODO: Refine min_popularity
       const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.track);
-      const x = await spotifyApi.getRecommendations({
-        seed_tracks: [''],
-        seed_genres: [''],
-        seed_artists: [''],
-        min_popularity: 50,
-      });
+      // const x = await spotifyApi.getRecommendations({
+      //   seed_tracks: [''],
+      //   seed_genres: [''],
+      //   seed_artists: [''],
+      //   min_popularity: 50,
+      // });
 
       console.log(JSON.stringify(trackData.body));
 
