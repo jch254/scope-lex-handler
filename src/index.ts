@@ -53,7 +53,15 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: songs[0].full_title,
+            content: songs[0].title_with_featured,
+          },
+          responseCard: {
+            genericAttachments: [{
+              title: songs[0].title_with_featured,
+              subTitle: songs[0].primary_artist.name,
+              imageUrl: songs[0].song_art_image_thumbnail_url,
+              attachmentLinkUrl: songs[0].url,
+            }],
           },
         },
       };
