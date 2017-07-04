@@ -73,26 +73,25 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       // - YouTube link: media[provider === "youtube"].url
 
       // TODO: Link to Genius and Spotify etc.
-      const responseMessage = `
-        Title: ${fullGeniusSong.title}
-        Artist: ${fullGeniusSong.primary_artist.name}
-        Album: ${
-          fullGeniusSong.album !== null ?
-            fullGeniusSong.album.name :
-            'Unknown'
-        }
-        Release date: ${fullGeniusSong.release_date}
-        Producers: ${
-          fullGeniusSong.producer_artists !== null ?
-            fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
-            'Unknown'
-        }
-        Writers: ${
-          fullGeniusSong.writer_artists !== null ?
-            fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
-            'Unknown'
-        }
-      `;
+      const responseMessage =
+`Title: ${fullGeniusSong.title}
+Artist: ${fullGeniusSong.primary_artist.name}
+Album: ${
+  fullGeniusSong.album !== null ?
+    fullGeniusSong.album.name :
+    'Unknown'
+}
+Release date: ${fullGeniusSong.release_date}
+Producers: ${
+  fullGeniusSong.producer_artists !== null ?
+    fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
+    'Unknown'
+}
+Writers: ${
+  fullGeniusSong.writer_artists !== null ?
+    fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
+    'Unknown'
+}`;
 
       response = {
         dialogAction: {
