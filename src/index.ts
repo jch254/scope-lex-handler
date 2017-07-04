@@ -14,6 +14,7 @@ const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
 export async function handler(event: any, context: Context, callback: Callback) {
   console.log('handler');
+  console.log(event);
 
   try {
     const authData = await spotifyApi.clientCredentialsGrant();
