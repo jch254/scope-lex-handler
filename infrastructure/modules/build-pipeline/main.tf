@@ -22,7 +22,6 @@ resource "aws_iam_role" "codebuild_role" {
 EOF
 }
 
-# TODO: Refine codebuild_policy perms
 data "template_file" "codebuild_policy" {
   template = "${file("${path.module}/codebuild-role-policy.tpl")}"
 
@@ -90,6 +89,7 @@ resource "aws_iam_role_policy" "codepipeline_policy" {
 resource "aws_s3_bucket" "artifacts" {
   bucket = "${var.name}-codepipeline-artifacts"
   acl = "private"
+  force_destroy = true
 }
 
 resource "aws_codepipeline" "codepipeline" {

@@ -7,6 +7,7 @@ data "archive_file" "artifacts" {
 resource "aws_s3_bucket" "deployment" {
   bucket = "${var.name}-deployment"
   acl = "private"
+  force_destroy = true
 }
 
 resource "aws_s3_bucket_object" "artifacts" {

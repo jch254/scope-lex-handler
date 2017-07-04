@@ -1,10 +1,10 @@
 # Deployment/Infrastructure
 
-Beatbot-fulfillment-handler is a Lambda function built, tested and deployed to AWS by CodePipeline and Codebuild.
+Muzo-fulfillment-handler is a Lambda function built, tested and deployed to AWS by CodePipeline and Codebuild.
 
 ---
 
-**All commands below must be run in the /infrastructure directory.**
+**All commands below must be run in each /infrastructure subdirectory (e.g. /infrastructure/admin-api) then in the /infrastructure directory**
 
 To deploy to AWS, you must:
 
@@ -31,6 +31,7 @@ terraform init \
 
 ### Updating infrastructure
 
+1. Export all environment variables beginnging with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
 1. Make necessary infrastructure code changes.
 1. Initialise Terraform:
 ```
@@ -45,6 +46,7 @@ terraform init \
 
 ### Destroying infrastructure (use with care)
 
+1. Export all environment variables beginnging with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
 1. Initialise Terraform:
 ```
 terraform init \

@@ -8,11 +8,11 @@ variable "log_retention" {
 }
 
 variable "kms_key_arns" {
-  description = "Array of escaped KMS Key ARNs used to decrypt secrets specified via ssm_parameter_arns variable"
+  description = "Array of KMS Key ARNs used to decrypt secrets specified via ssm_parameter_arns variable"
 }
 
 variable "ssm_parameter_arns" {
-  description = "Array of escaped SSM Parameter ARNs used to set secret build environment variables via SSM Parameter Store"
+  description = "Array of SSM Parameter ARNs used to set secret build environment variables via SSM Parameter Store"
 }
 
 variable "build_compute_type" {
