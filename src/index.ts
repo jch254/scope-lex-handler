@@ -24,9 +24,9 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     spotifyApi.setAccessToken(authData.body['access_token']);
 
     if (event.currentIntent.name === 'GetSuggestions') {
-      // TODO: Get appropriate data for Spotify API request from event params using spotify-web-api-node
+      // TODO: Get appropriate data for Spotify API request from event slots using spotify-web-api-node
       // TODO: Send request to Spotify API
-      const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.Tracks);
+      const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.track);
 
       console.log(JSON.stringify(trackData.body));
 
