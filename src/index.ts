@@ -11,9 +11,7 @@ const spotifyApi = new SpotifyWebApi({
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
-// TODO: Return appropriate typed LexResponse
-// TODO: Handle failed states
-// TODO: Improve error handing
+// TODO: Handle error/failed states
 export async function handler(event: MuzoEvent, context: Context, callback: Callback) {
   console.log('handler');
   console.log(event);
@@ -74,20 +72,27 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       // - Sampled by: song_relationships[type === "sampled_in"].songs
       // - YouTube link: media[provider === "youtube"].url
 
-      const responseMessage = {
-        Title: fullGeniusSong.title, // TODO: link to url if possible
-        Artist: fullGeniusSong.primary_artist.name, // TODO: link to primary_artist.url if possible
-        Album: fullGeniusSong.album !== null ?
-          fullGeniusSong.album.name : // TODO: link to album.url if possible
-          undefined,
-        'Release date': fullGeniusSong.release_date,
-        Producers: fullGeniusSong.producer_artists !== null ?
-          fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
-          undefined,
-        Writers: fullGeniusSong.writer_artists !== null ?
-          fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
-          undefined, 
-      };
+      // TODO: Link to Genius and Spotify etc.
+      const responseMessage = `
+        Title: ${fullGeniusSong.title}
+        Artist: ${fullGeniusSong.primary_artist.name}
+        Album: ${
+          fullGeniusSong.album !== null ?
+            fullGeniusSong.album.name :
+            'Unknown'
+        }
+        Release date: ${fullGeniusSong.release_date}
+        Producers: ${
+          fullGeniusSong.producer_artists !== null ?
+            fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
+            'Unknown'
+        }
+        Writers: ${
+          fullGeniusSong.writer_artists !== null ?
+            fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
+            'Unknown'
+        }
+      `;
 
       response = {
         dialogAction: {
@@ -95,7 +100,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: JSON.stringify(responseMessage), // TODO: Format data nicely (link to Genius and Spotify)
+            content: responseMessage,
           },
           responseCard: {
             contentType: 'application/vnd.amazonaws.card.generic',
