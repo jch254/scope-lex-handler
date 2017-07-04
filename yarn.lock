@@ -1106,12 +1106,6 @@ node-fetch@^1.6.3:
     encoding "^0.1.11"
     is-stream "^1.0.1"
 
-node-genius@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/node-genius/-/node-genius-1.1.0.tgz#0f462e35757ab16b3fcf54dfdbabefba20f457e5"
-  dependencies:
-    request "^2.57.0"
-
 node-pre-gyp@^0.6.36:
   version "0.6.36"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.6.36.tgz#db604112cb74e0d477554e9b505b17abddfab786"
@@ -1387,7 +1381,7 @@ repeating@^1.1.2:
   dependencies:
     is-finite "^1.0.0"
 
-request@^2.57.0, request@^2.81.0:
+request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:

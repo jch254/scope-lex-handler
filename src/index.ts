@@ -1,4 +1,5 @@
 import { Callback, Context } from 'aws-lambda';
+import * as Lyricist from 'lyricist/node6';
 import * as SpotifyWebApi from 'spotify-web-api-node';
 
 // TODO: Type handler event parameter as LexInputEvent
@@ -8,6 +9,8 @@ const spotifyApi = new SpotifyWebApi({
   clientId: process.env.SPOTIFY_CLIENT_ID,
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
+
+const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
 export async function handler(event: any, context: Context, callback: Callback) {
   console.log('handler');
@@ -20,6 +23,10 @@ export async function handler(event: any, context: Context, callback: Callback) 
     const trackData = await spotifyApi.searchTracks('artist:Kanye West');
 
     console.log(JSON.stringify(trackData.body));
+
+    const song = await lyricist.search('No good blood sucker');
+
+    console.log(song);
 
     return callback();
   } catch (err) {
