@@ -24,14 +24,26 @@ export async function handler(event: any, context: Context, callback: Callback) 
 
     console.log(JSON.stringify(trackData.body));
 
-    const song = await lyricist.search('No good blood sucker');
+    const songs = await lyricist.search('No good blood sucker');
 
-    console.log(song);
+    console.log(songs);
 
-    return callback();
+    const response = {
+      dialogAction: {
+        type: 'Close',
+        fulfillmentState: 'Fulfilled', // TODO: Handle failed state
+        message: {
+          contentType: 'PlainText',
+          content: songs[0].full_title,
+        },
+      },
+    };
+
+    return callback(undefined, response);
   } catch (err) {
     console.log(err);
 
     return callback(err);
   }
 }
+
