@@ -53,11 +53,11 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
       const fullGeniusSong = await lyricist.song(geniusSongs[0].id);
-      const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'Spotify');
+      const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
 
       let audioFeatures = {};
 
-      if (spotifyMedia) {
+      if (spotifyMedia !== null) {
         const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
         const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
         
@@ -68,19 +68,24 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       console.log(JSON.stringify(fullGeniusSong));
       console.log(JSON.stringify(audioFeatures));
 
-      // TODO: Return data from audioFeatures
-
-      // TODO: Return data from fullGeniusSong:
-      // - Artist: primary_artist.name (link to primary_artist.url if possible),
-      // - Album: album.name (link to album.url if possible),
-      // - Release date: release_date,
-      // - Producers: producer_artists[*].name (link to producer_artists[*].url if possible)
-      // - Writers: writer_artists[*].name (link to writer_artists[*].url if possible)
+      // TODO: Add data from audioFeatures to responseMessage
+      // TODO: Add data from fullGeniusSong to responseMessage
       // - Samples: song_relationships[type === "samples"].songs
       // - Sampled by: song_relationships[type === "sampled_in"].songs
       // - YouTube link: media[provider === "youtube"].url
 
-      // TODO: Format data nicely (link to Genius and Spotify)
+      const responseMessage = {
+        Title: fullGeniusSong.title, // TODO: link to url if possible
+        Artist: fullGeniusSong.primary_artist.name, // TODO: link to primary_artist.url if possible
+        Album: fullGeniusSong.album.name, // TODO: link to album.url if possible
+        'Release date': fullGeniusSong.release_date,
+        Producers: fullGeniusSong.producer_artists !== null ?
+          fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(',') :
+          undefined,
+        Writers: fullGeniusSong.writer_artists !== null ?
+          fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(',') :
+          undefined, 
+      };
 
       response = {
         dialogAction: {
@@ -88,7 +93,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: fullGeniusSong.full_title,
+            content: responseMessage, // TODO: Format data nicely (link to Genius and Spotify)
           },
           responseCard: {
             contentType: 'application/vnd.amazonaws.card.generic',
