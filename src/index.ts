@@ -29,7 +29,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       // TODO: Send getRecommendations request using track, genre and artist ids to Spotify API
       // TODO: Refine min_popularity
       const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.track);
-      // const x = await spotifyApi.getRecommendations({
+      // const recommendations = await spotifyApi.getRecommendations({
       //   seed_tracks: [''],
       //   seed_genres: [''],
       //   seed_artists: [''],
@@ -53,7 +53,11 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const songs = await lyricist.search(event.currentIntent.slots.lyric);
 
+      // TODO: Get track id via Spotiry API
       // TODO: Fetch audio features etc. via Spotify API
+      // const audioFeatures = await spotifyApi.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK');
+      // const audioAnalysis = await spotifyApi.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK');
+
       // TODO: Return more data from Genius response
       // TODO: Format data nicely
       console.log(JSON.stringify(songs));
