@@ -12,7 +12,8 @@ const spotifyApi = new SpotifyWebApi({
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
 // TODO: Return appropriate typed LexResponse
-// TODO: Handle failed state
+// TODO: Handle failed states
+// TODO: Improve error handing
 export async function handler(event: MuzoEvent, context: Context, callback: Callback) {
   console.log('handler');
   console.log(event);
@@ -52,6 +53,9 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const songs = await lyricist.search(event.currentIntent.slots.lyric);
 
+      // TODO: Fetch audio features etc. via Spotify API
+      // TODO: Return more data from Genius response
+      // TODO: Format data nicely
       console.log(JSON.stringify(songs));
 
       response = {
