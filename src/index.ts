@@ -25,8 +25,8 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     spotifyApi.setAccessToken(authData.body['access_token']);
 
     if (event.currentIntent.name === 'GetSuggestions') {
-      // TODO: Get track, genre and artist ids via Spotiry API after each response from user
-      // TODO: Send getRecommendations request using track, genre and artist ids to Spotify API
+      // TODO: Get track, genre and artist ids via Spotify API after each response from user
+      // TODO: Send getRecommendations request to Spotify API using track, genre and artist ids
       // TODO: Refine min_popularity
       const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.track);
       // const recommendations = await spotifyApi.getRecommendations({
@@ -51,16 +51,36 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     }
 
     if (event.currentIntent.name === 'GetLyricData') {
-      const songs = await lyricist.search(event.currentIntent.slots.lyric);
+      const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
+      const fullGeniusSong = await lyricist.song(geniusSongs[0].id);
+      const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'Spotify');
 
-      // TODO: Get track id via Spotiry API
-      // TODO: Fetch audio features etc. via Spotify API
-      // const audioFeatures = await spotifyApi.getAudioFeaturesForTrack('3Qm86XLflmIXVm1wcwkgDK');
-      // const audioAnalysis = await spotifyApi.getAudioAnalysisForTrack('3Qm86XLflmIXVm1wcwkgDK');
+      let audioFeatures = {};
 
-      // TODO: Return more data from Genius response
-      // TODO: Format data nicely
-      console.log(JSON.stringify(songs));
+      if (spotifyMedia) {
+        const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
+        const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
+        
+        audioFeatures = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
+      }
+
+      console.log(JSON.stringify(geniusSongs));
+      console.log(JSON.stringify(fullGeniusSong));
+      console.log(JSON.stringify(audioFeatures));
+
+      // TODO: Return data from audioFeatures
+
+      // TODO: Return data from fullGeniusSong:
+      // - Artist: primary_artist.name (link to primary_artist.url if possible),
+      // - Album: album.name (link to album.url if possible),
+      // - Release date: release_date,
+      // - Producers: producer_artists[*].name (link to producer_artists[*].url if possible)
+      // - Writers: writer_artists[*].name (link to writer_artists[*].url if possible)
+      // - Samples: song_relationships[type === "samples"].songs
+      // - Sampled by: song_relationships[type === "sampled_in"].songs
+      // - YouTube link: media[provider === "youtube"].url
+
+      // TODO: Format data nicely (link to Genius and Spotify)
 
       response = {
         dialogAction: {
@@ -68,15 +88,16 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: songs[0].title_with_featured,
+            content: fullGeniusSong.full_title,
           },
           responseCard: {
             contentType: 'application/vnd.amazonaws.card.generic',
+            version: 1,
             genericAttachments: [{
-              title: songs[0].title_with_featured,
-              subTitle: songs[0].primary_artist.name,
-              imageUrl: songs[0].song_art_image_thumbnail_url,
-              attachmentLinkUrl: songs[0].url,
+              title: fullGeniusSong.title_with_featured,
+              subTitle: fullGeniusSong.primary_artist.name,
+              imageUrl: fullGeniusSong.song_art_image_thumbnail_url,
+              attachmentLinkUrl: fullGeniusSong.url,
             }],
           },
         },
