@@ -80,10 +80,10 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
         Album: fullGeniusSong.album.name, // TODO: link to album.url if possible
         'Release date': fullGeniusSong.release_date,
         Producers: fullGeniusSong.producer_artists !== null ?
-          fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(',') :
+          fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
           undefined,
         Writers: fullGeniusSong.writer_artists !== null ?
-          fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(',') :
+          fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
           undefined, 
       };
 
@@ -93,7 +93,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: responseMessage, // TODO: Format data nicely (link to Genius and Spotify)
+            content: JSON.stringify(responseMessage), // TODO: Format data nicely (link to Genius and Spotify)
           },
           responseCard: {
             contentType: 'application/vnd.amazonaws.card.generic',
