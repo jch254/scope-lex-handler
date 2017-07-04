@@ -53,11 +53,11 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
       const fullGeniusSong = await lyricist.song(geniusSongs[0].id);
-      const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
+      const spotifyMedia = (fullGeniusSong.media || []).find((media: any) => media.provider === 'spotify');
 
       let audioFeatures = {};
 
-      if (spotifyMedia !== null) {
+      if (spotifyMedia !== undefined) {
         const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
         const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
         
@@ -77,7 +77,9 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       const responseMessage = {
         Title: fullGeniusSong.title, // TODO: link to url if possible
         Artist: fullGeniusSong.primary_artist.name, // TODO: link to primary_artist.url if possible
-        Album: fullGeniusSong.album.name, // TODO: link to album.url if possible
+        Album: fullGeniusSong.album !== null ?
+          fullGeniusSong.album.name : // TODO: link to album.url if possible
+          undefined,
         'Release date': fullGeniusSong.release_date,
         Producers: fullGeniusSong.producer_artists !== null ?
           fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
