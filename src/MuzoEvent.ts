@@ -9,7 +9,9 @@ export interface GetSuggestionsIntent {
 
 export interface GetLyricDataIntent {
   name: 'GetLyricData';
-  slots: {};
+  slots: {
+    lyric: string;
+  };
 }
 
 interface MuzoLexEvent {
