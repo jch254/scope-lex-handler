@@ -24,9 +24,16 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     spotifyApi.setAccessToken(authData.body['access_token']);
 
     if (event.currentIntent.name === 'GetSuggestions') {
-      // TODO: Get appropriate data for Spotify API request from event slots using spotify-web-api-node
-      // TODO: Send request to Spotify API
+      // TODO: Get track, genre and artist ids via Spotiry API after each response from user
+      // TODO: Send getRecommendations request using track, genre and artist ids to Spotify API
+      // TODO: Refine min_popularity
       const trackData = await spotifyApi.searchTracks(event.currentIntent.slots.track);
+      const x = await spotifyApi.getRecommendations({
+        seed_tracks: [''],
+        seed_genres: [''],
+        seed_artists: [''],
+        min_popularity: 50,
+      });
 
       console.log(JSON.stringify(trackData.body));
 
@@ -56,6 +63,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
             content: songs[0].title_with_featured,
           },
           responseCard: {
+            contentType: 'application/vnd.amazonaws.card.generic',
             genericAttachments: [{
               title: songs[0].title_with_featured,
               subTitle: songs[0].primary_artist.name,
