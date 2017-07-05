@@ -69,74 +69,62 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       console.log(JSON.stringify(geniusSongs));
       console.log(JSON.stringify(fullGeniusSong));
       console.log(JSON.stringify(audioFeatures));
+    
+      let responseMessage = `Title: ${fullGeniusSong.title}
+Artist: ${fullGeniusSong.primary_artist.name}`;
 
-      // TODO: Add data from audioFeatures to responseMessage:
-      // {
-      //   "body": {
-      //       "danceability": 0.551,
-      //       "energy": 0.403,
-      //       "key": 1,
-      //       "loudness": -8.02,
-      //       "mode": 1,
-      //       "speechiness": 0.061,
-      //       "acousticness": 0.193,
-      //       "instrumentalness": 0.00219,
-      //       "liveness": 0.133,
-      //       "valence": 0.117,
-      //       "tempo": 78.252,
-      //       "type": "audio_features",
-      //       "id": "4vgVpxNTdfmcbBvk6hMPn4",
-      //       "uri": "spotify:track:4vgVpxNTdfmcbBvk6hMPn4",
-      //       "track_href": "https://api.spotify.com/v1/tracks/4vgVpxNTdfmcbBvk6hMPn4",
-      //       "analysis_url": "https://api.spotify.com/v1/audio-analysis/4vgVpxNTdfmcbBvk6hMPn4",
-      //       "duration_ms": 301587,
-      //       "time_signature": 4
-      //   }
-      // }
-      
-      const responseMessage =
-`Title: ${fullGeniusSong.title}
-Artist: ${fullGeniusSong.primary_artist.name}
-${
-  fullGeniusSong.album !== null ?
-    `Album: ${fullGeniusSong.album.name}` :
-    ''
-}
-Release date: ${fullGeniusSong.release_date}
-${
-  audioFeatures !== undefined ?
-    `BPM: ${audioFeatures.tempo}` :
-    ''
-}
-${
-  audioFeatures !== undefined ?
-    `Key: ${audioFeatures.key}` :
-    ''
-}
+      if (fullGeniusSong.album !== null) {
+        responseMessage += `
+Album: ${fullGeniusSong.album.name}`;
+      }
 
-${
-  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples').songs.length > 0 ?
-    `Samples: ${fullGeniusSong
-      .song_relationships
-      .find((relationship: any) => relationship.type === 'samples')
-      .songs
-      .map((song: any) => song.full_title).join(', ')
-    }` :
-    ''
-}
+      responseMessage += `
+Release date: ${fullGeniusSong.release_date}`;
 
-${
-  fullGeniusSong.producer_artists !== null ?
-    `Producers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
-    ''
-}
+      if (audioFeatures !== undefined) {
+        responseMessage += `
+BPM: ${audioFeatures.tempo}`;
+      }
 
-${
-  fullGeniusSong.writer_artists !== null ?
-    `Writers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
-    ''
-}
-`;
+      if (audioFeatures !== undefined) {
+        responseMessage += `
+Key: ${audioFeatures.key}`; // TODO: Convert to proper notation
+      }
+
+      if (fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs.length > 0) {
+        responseMessage += `
+
+Sample(s)
+${fullGeniusSong
+  .song_relationships
+  .find((r: any) => r.type === 'samples')
+  .songs
+  .map((s: any) => `- ${s.full_title}`)
+  .join('\n')
+}`;
+      }
+
+      if (fullGeniusSong.producer_artists !== null) {
+        responseMessage += `
+
+Producer(s)
+${fullGeniusSong
+  .producer_artists
+  .map((p: any) => `- ${p.name}`)
+  .join('\n')
+}`;
+      }
+
+      if (fullGeniusSong.producer_artists !== null) {
+        responseMessage += `
+
+Writer(s)
+${fullGeniusSong
+  .writer_artists
+  .map((w: any) => `- ${w.name}`)
+  .join('\n')
+}`;
+      }
 
       const attachments = [];
 
