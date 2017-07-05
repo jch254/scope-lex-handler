@@ -103,18 +103,6 @@ ${
     ''
 }
 Release date: ${fullGeniusSong.release_date}
-
-${
-  fullGeniusSong.producer_artists !== null ?
-    `Producers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
-    ''
-}
-${
-  fullGeniusSong.writer_artists !== null ?
-    `Writers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
-    ''
-}
-
 ${
   audioFeatures !== undefined ?
     `BPM: ${audioFeatures.tempo}` :
@@ -125,6 +113,7 @@ ${
     `Key: ${audioFeatures.key}` :
     ''
 }
+
 ${
   fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples').songs.length > 0 ?
     `Samples: ${fullGeniusSong
@@ -134,7 +123,20 @@ ${
       .map((song: any) => song.full_title).join(', ')
     }` :
     ''
-}`;
+}
+
+${
+  fullGeniusSong.producer_artists !== null ?
+    `Producers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
+    ''
+}
+
+${
+  fullGeniusSong.writer_artists !== null ?
+    `Writers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
+    ''
+}
+`;
 
       const attachments = [];
 
