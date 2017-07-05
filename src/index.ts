@@ -11,6 +11,39 @@ const spotifyApi = new SpotifyWebApi({
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
+const mapPitchClassToKey = (pitchClass: number): string => {
+  switch (pitchClass) {
+    case 0:
+      return 'C';
+    case 1:
+      return 'C♯/D♭';
+    case 2:
+      return 'D';
+    case 3:
+      return 'D♯/E♭';
+    case 4:
+      return 'E';
+    case 5:
+      return 'F';
+    case 6:
+      return 'F♯/G♭';
+    case 7:
+      return 'G';
+    case 8:
+      return 'G♯/A♭';
+    case 9:
+      return 'A';
+    case 10:
+      return 'A♯/B♭';
+    case 11:
+      return 'B';
+    default:
+      return 'UNKNOWN';
+  }
+};
+
+const mapMode = (mode: number): string => (mode === 1 ? 'major' : 'minor');
+
 // TODO: Handle error/failed states
 // TODO: Improve types/remove any types
 export async function handler(event: MuzoEvent, context: Context, callback: Callback) {
@@ -52,12 +85,13 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
       const fullGeniusSong = await lyricist.song(geniusSongs[0].id, { fetchLyrics: false });
+
       const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
       const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider === 'youtube');
       const soundcloudMedia = fullGeniusSong.media.find((media: any) => media.provider === 'soundcloud');
-
+      const samples = fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs;
+      
       let audioFeatures;
-
       if (spotifyMedia !== undefined) {
         const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
         const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
@@ -88,42 +122,28 @@ BPM: ${audioFeatures.tempo}`;
 
       if (audioFeatures !== undefined) {
         responseMessage += `
-Key: ${audioFeatures.key}`; // TODO: Convert to proper notation
+Key: ${mapPitchClassToKey(audioFeatures.key)} ${mapMode(audioFeatures.mode)}`;
       }
 
-      if (fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs.length > 0) {
+      if (samples.length > 0) {
         responseMessage += `
 
-Sample(s)
-${fullGeniusSong
-  .song_relationships
-  .find((r: any) => r.type === 'samples')
-  .songs
-  .map((s: any) => `- ${s.full_title}`)
-  .join('\n')
-}`;
+Sample${samples.length === 1 ? '' : 's'}
+${samples.map((s: any) => `- ${s.full_title}`).join('\n')}`;
       }
 
-      if (fullGeniusSong.producer_artists !== null) {
+      if (fullGeniusSong.producer_artists.length > 0) {
         responseMessage += `
 
-Producer(s)
-${fullGeniusSong
-  .producer_artists
-  .map((p: any) => `- ${p.name}`)
-  .join('\n')
-}`;
+Producer${fullGeniusSong.producer_artists.length === 1 ? '' : 's'}
+${fullGeniusSong.producer_artists.map((p: any) => `- ${p.name}`).join('\n')}`;
       }
 
-      if (fullGeniusSong.writer_artists !== null) {
+      if (fullGeniusSong.writer_artists.length > 0) {
         responseMessage += `
 
-Writer(s)
-${fullGeniusSong
-  .writer_artists
-  .map((w: any) => `- ${w.name}`)
-  .join('\n')
-}`;
+Writer${fullGeniusSong.writer_artists.length === 1 ? '' : 's'}
+${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
       }
 
       const attachments = [];
