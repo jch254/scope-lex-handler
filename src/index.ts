@@ -62,7 +62,8 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
         const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
         const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
         
-        audioFeatures = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId).body;
+        const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
+        audioFeatures = audioFeaturesResponse.body;
       }
 
       console.log(JSON.stringify(geniusSongs));
