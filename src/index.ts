@@ -50,7 +50,7 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
 
     if (event.currentIntent.name === 'GetLyricData') {
       const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
-      const fullGeniusSong = await lyricist.song(geniusSongs[0].id);
+      const fullGeniusSong = await lyricist.song(geniusSongs[0].id, { fetchLyrics: false });
       const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
       const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider === 'youtube');
 
@@ -67,7 +67,29 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       console.log(JSON.stringify(fullGeniusSong));
       console.log(JSON.stringify(audioFeatures));
 
-      // TODO: Add data from audioFeatures to responseMessage
+      // TODO: Add data from audioFeatures to responseMessage:
+      // {
+      //   "body": {
+      //       "danceability": 0.551,
+      //       "energy": 0.403,
+      //       "key": 1,
+      //       "loudness": -8.02,
+      //       "mode": 1,
+      //       "speechiness": 0.061,
+      //       "acousticness": 0.193,
+      //       "instrumentalness": 0.00219,
+      //       "liveness": 0.133,
+      //       "valence": 0.117,
+      //       "tempo": 78.252,
+      //       "type": "audio_features",
+      //       "id": "4vgVpxNTdfmcbBvk6hMPn4",
+      //       "uri": "spotify:track:4vgVpxNTdfmcbBvk6hMPn4",
+      //       "track_href": "https://api.spotify.com/v1/tracks/4vgVpxNTdfmcbBvk6hMPn4",
+      //       "analysis_url": "https://api.spotify.com/v1/audio-analysis/4vgVpxNTdfmcbBvk6hMPn4",
+      //       "duration_ms": 301587,
+      //       "time_signature": 4
+      //   }
+      // }
       
       const responseMessage =
 `Title: ${fullGeniusSong.title}
