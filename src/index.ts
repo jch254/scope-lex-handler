@@ -98,6 +98,17 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
         
         const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
         audioFeatures = audioFeaturesResponse.body;
+      } else {
+        const spotifyTracks = await spotifyApi.searchTracks(
+          `track:${fullGeniusSong.title} artist:${fullGeniusSong.primary_artist.name}`,
+        );
+
+        if (spotifyTracks.body.tracks.total > 0) {
+          const spotifyTrackId = spotifyTracks.body.tracks.items[0].id;
+
+          const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
+          audioFeatures = audioFeaturesResponse.body;
+        }
       }
 
       console.log(JSON.stringify(geniusSongs));
