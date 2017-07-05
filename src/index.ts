@@ -12,6 +12,7 @@ const spotifyApi = new SpotifyWebApi({
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 
 // TODO: Handle error/failed states
+// TODO: Improve types/remove any types
 export async function handler(event: MuzoEvent, context: Context, callback: Callback) {
   console.log('handler');
   console.log(event);
@@ -53,14 +54,15 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       const fullGeniusSong = await lyricist.song(geniusSongs[0].id, { fetchLyrics: false });
       const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
       const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider === 'youtube');
+      const soundcloudMedia = fullGeniusSong.media.find((media: any) => media.provider === 'soundcloud');
 
-      let audioFeatures = {};
+      let audioFeatures;
 
       if (spotifyMedia !== undefined) {
         const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
         const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
         
-        audioFeatures = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
+        audioFeatures = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId).body;
       }
 
       console.log(JSON.stringify(geniusSongs));
@@ -111,6 +113,17 @@ ${
     `Writers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
     ''
 }
+
+${
+  audioFeatures !== undefined ?
+    `BPM: ${audioFeatures.tempo}` :
+    ''
+}
+${
+  audioFeatures !== undefined ?
+    `Key: ${audioFeatures.key}` :
+    ''
+}
 ${
   fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples').songs.length > 0 ?
     `Samples: ${fullGeniusSong
@@ -120,15 +133,6 @@ ${
       .map((song: any) => song.full_title).join(', ')
     }` :
     ''
-}
-${
-  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'sampled_in').songs.length > 0 ?
-    `Sampled by: ${fullGeniusSong
-      .song_relationships
-      .find((relationship: any) => relationship.type === 'sampled_in')
-      .songs
-      .map((song: any) => song.full_title).join(', ')}` :
-      ''
 }`;
 
       const attachments = [];
@@ -155,6 +159,15 @@ ${
           subTitle: fullGeniusSong.primary_artist.name,
           imageUrl: fullGeniusSong.song_art_image_url,
           attachmentLinkUrl: youtubeMedia.url,
+        });
+      }
+
+      if (soundcloudMedia !== undefined) {
+        attachments.push({
+          title: fullGeniusSong.title_with_featured,
+          subTitle: fullGeniusSong.primary_artist.name,
+          imageUrl: fullGeniusSong.song_art_image_url,
+          attachmentLinkUrl: soundcloudMedia.url,
         });
       }
 
