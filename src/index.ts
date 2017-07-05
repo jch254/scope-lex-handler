@@ -51,7 +51,8 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
     if (event.currentIntent.name === 'GetLyricData') {
       const geniusSongs = await lyricist.search(event.currentIntent.slots.lyric);
       const fullGeniusSong = await lyricist.song(geniusSongs[0].id);
-      const spotifyMedia = (fullGeniusSong.media || []).find((media: any) => media.provider === 'spotify');
+      const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
+      const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider === 'youtube');
 
       let audioFeatures = {};
 
@@ -67,31 +68,71 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       console.log(JSON.stringify(audioFeatures));
 
       // TODO: Add data from audioFeatures to responseMessage
-      // TODO: Add data from fullGeniusSong to responseMessage
-      // - Samples: song_relationships[type === "samples"].songs
-      // - Sampled by: song_relationships[type === "sampled_in"].songs
-      // - YouTube link: media[provider === "youtube"].url
-
-      // TODO: Link to Genius and Spotify etc.
+      
       const responseMessage =
 `Title: ${fullGeniusSong.title}
 Artist: ${fullGeniusSong.primary_artist.name}
-Album: ${
+${
   fullGeniusSong.album !== null ?
-    fullGeniusSong.album.name :
-    'Unknown'
+    `Album: ${fullGeniusSong.album.name}` :
+    ''
 }
 Release date: ${fullGeniusSong.release_date}
-Producers: ${
+
+${
   fullGeniusSong.producer_artists !== null ?
-    fullGeniusSong.producer_artists.map((producer: any) => producer.name).join(', ') :
-    'Unknown'
+    `Producers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
+    ''
 }
-Writers: ${
+${
   fullGeniusSong.writer_artists !== null ?
-    fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ') :
-    'Unknown'
+    `Writers: ${fullGeniusSong.writer_artists.map((writer: any) => writer.name).join(', ')}` :
+    ''
+}
+${
+  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples') !== undefined ?
+    `Samples: ${fullGeniusSong
+      .song_relationships
+      .find((relationship: any) => relationship.type === 'samples')
+      .songs
+      .map((song: any) => song.full_title).join(', ')
+    }` :
+    ''
+}
+${
+  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'sampled_in') !== undefined ?
+    `Sampled by: ${fullGeniusSong
+      .song_relationships
+      .find((relationship: any) => relationship.type === 'sampled_in')
+      .songs
+      .map((song: any) => song.full_title).join(', ')}` :
+      ''
 }`;
+
+      const attachments = [{
+        title: fullGeniusSong.title_with_featured,
+        subTitle: fullGeniusSong.primary_artist.name,
+        imageUrl: fullGeniusSong.song_art_image_url,
+        attachmentLinkUrl: fullGeniusSong.url,
+      }];
+
+      if (spotifyMedia !== undefined) {
+        attachments.push({
+          title: fullGeniusSong.title_with_featured,
+          subTitle: fullGeniusSong.primary_artist.name,
+          imageUrl: fullGeniusSong.song_art_image_url,
+          attachmentLinkUrl: spotifyMedia.url,
+        });
+      }
+
+      if (youtubeMedia !== undefined) {
+        attachments.push({
+          title: fullGeniusSong.title_with_featured,
+          subTitle: fullGeniusSong.primary_artist.name,
+          imageUrl: fullGeniusSong.song_art_image_url,
+          attachmentLinkUrl: youtubeMedia.url,
+        });
+      }
 
       response = {
         dialogAction: {
@@ -104,12 +145,7 @@ Writers: ${
           responseCard: {
             contentType: 'application/vnd.amazonaws.card.generic',
             version: 1,
-            genericAttachments: [{
-              title: fullGeniusSong.title_with_featured,
-              subTitle: fullGeniusSong.primary_artist.name,
-              imageUrl: fullGeniusSong.song_art_image_thumbnail_url,
-              attachmentLinkUrl: fullGeniusSong.url,
-            }],
+            genericAttachments: attachments,
           },
         },
       };
