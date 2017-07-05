@@ -112,7 +112,7 @@ ${
     ''
 }
 ${
-  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples') !== undefined ?
+  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'samples').songs.length > 0 ?
     `Samples: ${fullGeniusSong
       .song_relationships
       .find((relationship: any) => relationship.type === 'samples')
@@ -122,7 +122,7 @@ ${
     ''
 }
 ${
-  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'sampled_in') !== undefined ?
+  fullGeniusSong.song_relationships.find((relationship: any) => relationship.type === 'sampled_in').songs.length > 0 ?
     `Sampled by: ${fullGeniusSong
       .song_relationships
       .find((relationship: any) => relationship.type === 'sampled_in')
@@ -131,12 +131,7 @@ ${
       ''
 }`;
 
-      const attachments = [{
-        title: fullGeniusSong.title_with_featured,
-        subTitle: fullGeniusSong.primary_artist.name,
-        imageUrl: fullGeniusSong.song_art_image_url,
-        attachmentLinkUrl: fullGeniusSong.url,
-      }];
+      const attachments = [];
 
       if (spotifyMedia !== undefined) {
         attachments.push({
@@ -146,6 +141,13 @@ ${
           attachmentLinkUrl: spotifyMedia.url,
         });
       }
+
+      attachments.push({
+        title: fullGeniusSong.title_with_featured,
+        subTitle: fullGeniusSong.primary_artist.name,
+        imageUrl: fullGeniusSong.song_art_image_url,
+        attachmentLinkUrl: fullGeniusSong.url,
+      });
 
       if (youtubeMedia !== undefined) {
         attachments.push({
