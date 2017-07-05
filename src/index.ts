@@ -115,7 +115,7 @@ ${fullGeniusSong
 }`;
       }
 
-      if (fullGeniusSong.producer_artists !== null) {
+      if (fullGeniusSong.writer_artists !== null) {
         responseMessage += `
 
 Writer(s)
