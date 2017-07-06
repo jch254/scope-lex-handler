@@ -26,13 +26,13 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
 
     switch (event.currentIntent.name) {
       case 'GetSuggestions':
-        response = handleGetSuggestionsIntent(event, lyricist, spotifyApi);
+        response = await handleGetSuggestionsIntent(event, lyricist, spotifyApi);
         break;
       case 'ScopeLyric':
-        response = handleScopeLyricIntent(event, lyricist, spotifyApi);
+        response = await handleScopeLyricIntent(event, lyricist, spotifyApi);
         break;
       case 'WrongLyric':
-        response = handleWrongLyricIntent(event, lyricist, spotifyApi);
+        response = await handleWrongLyricIntent(event, lyricist, spotifyApi);
         break;
       default:
         break;
