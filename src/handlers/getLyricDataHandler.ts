@@ -16,7 +16,7 @@ export default async function getLyricDataHandler(
   const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider === 'youtube');
   const soundcloudMedia = fullGeniusSong.media.find((media: any) => media.provider === 'soundcloud');
   const samples = fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs;
-  const sampledBy = fullGeniusSong.song_relationships.find((r: any) => r.type === 'sampled_by').songs;
+  const sampledIn = fullGeniusSong.song_relationships.find((r: any) => r.type === 'sampled_in').songs;
       
   let audioFeatures;
   if (spotifyMedia !== undefined) {
@@ -76,8 +76,8 @@ ${samples.map((s: any) => `- ${s.full_title}`).join('\n')}`;
   if (samples.length > 0) {
     responseMessage += `
 
-Sampled by
-${sampledBy.map((s: any) => `- ${s.full_title}`).join('\n')}`;
+Sampled in
+${sampledIn.map((s: any) => `- ${s.full_title}`).join('\n')}`;
   }
 
   if (fullGeniusSong.producer_artists.length > 0) {
