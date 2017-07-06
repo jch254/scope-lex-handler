@@ -73,7 +73,7 @@ Sample${samples.length === 1 ? '' : 's'}
 ${samples.map((s: any) => `- ${s.full_title}`).join('\n')}`;
   }
 
-  if (samples.length > 0) {
+  if (sampledIn.length > 0) {
     responseMessage += `
 
 Sampled in
