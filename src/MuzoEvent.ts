@@ -11,26 +11,26 @@ export interface GetSuggestionsIntent {
   slots: GetSuggestionsSlots;
 }
 
-export interface ScopeLyricSlots {
+export interface GetLyricDataSlots {
   lyric: string | null;
 }
 
-export interface ScopeLyricIntent {
-  name: 'ScopeLyric';
-  slots: ScopeLyricSlots;
+export interface GetLyricDataIntent {
+  name: 'GetLyricData';
+  slots: GetLyricDataSlots;
 }
 
-export interface WrongLyricSlots {
+export interface WrongLyricDataSlots {
   lyric: string | null;
 }
 
-export interface WrongLyricIntent {
-  name: 'WrongLyric';
-  slots: WrongLyricIntent;
+export interface WrongLyricDataIntent {
+  name: 'WrongLyricData';
+  slots: WrongLyricDataSlots;
 }
 
 interface MuzoEvent {
-  currentIntent: GetSuggestionsIntent | ScopeLyricIntent | WrongLyricIntent;
+  currentIntent: GetSuggestionsIntent | GetLyricDataIntent | WrongLyricDataIntent;
   invocationSource: 'DialogCodeHook' | 'FulfillmentCodeHook';
   sessionAttributes: MuzoSessionAttributes;
   inputTranscript: string;

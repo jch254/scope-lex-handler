@@ -2,9 +2,9 @@ import { Callback, Context } from 'aws-lambda';
 import * as Lyricist from 'lyricist/node6';
 import * as SpotifyWebApi from 'spotify-web-api-node';
 
+import handleGetLyricDataIntent from './handlers/getLyricDataHandler';
 import handleGetSuggestionsIntent from './handlers/getSuggestionsHandler';
-import handleScopeLyricIntent from './handlers/scopeLyricHandler';
-import handleWrongLyricIntent from './handlers/wrongLyricHandler';
+import handleWrongLyricDataIntent from './handlers/wrongLyricDataHandler';
 import MuzoEvent from './MuzoEvent';
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
@@ -28,11 +28,11 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
       case 'GetSuggestions':
         response = await handleGetSuggestionsIntent(event, lyricist, spotifyApi);
         break;
-      case 'ScopeLyric':
-        response = await handleScopeLyricIntent(event, lyricist, spotifyApi);
+      case 'GetLyricData':
+        response = await handleGetLyricDataIntent(event, lyricist, spotifyApi);
         break;
-      case 'WrongLyric':
-        response = await handleWrongLyricIntent(event, lyricist, spotifyApi);
+      case 'WrongLyricData':
+        response = await handleWrongLyricDataIntent(event, lyricist, spotifyApi);
         break;
       default:
         break;

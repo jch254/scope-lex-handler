@@ -1,15 +1,15 @@
 import { mapMode, mapPitchClassToKey } from '../utils';
-import MuzoEvent, { ScopeLyricIntent } from '../MuzoEvent';
+import MuzoEvent, { GetLyricDataIntent } from '../MuzoEvent';
 import MuzoResponse from '../MuzoResponse';
 
-export default async function scopeLyricHandler(
+export default async function getLyricDataHandler(
   event: MuzoEvent,
   lyricist: any,
   spotifyApi: any,
 ): Promise<MuzoResponse> {
-  console.log('scopeLyricHandler');
+  console.log('getLyricDataHandler');
 
-  const geniusSongs = await lyricist.search((event.currentIntent as ScopeLyricIntent).slots.lyric);
+  const geniusSongs = await lyricist.search((event.currentIntent as GetLyricDataIntent).slots.lyric);
   const fullGeniusSong = await lyricist.song(geniusSongs[0].id, { fetchLyrics: false });
 
   const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');

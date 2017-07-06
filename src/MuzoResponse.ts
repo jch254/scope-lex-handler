@@ -1,4 +1,4 @@
-import { GetSuggestionsSlots, ScopeLyricSlots, WrongLyricSlots } from './MuzoEvent';
+import { GetLyricDataSlots, GetSuggestionsSlots, WrongLyricDataSlots } from './MuzoEvent';
 import MuzoSessionAttributes from './MuzoSessionAttributes';
 
 interface Button {
@@ -16,7 +16,7 @@ interface GenericAttachment {
 
 interface DialogAction {
   type: 'Delegate' | 'Close'; // 'ElicitIntent' | 'ElicitSlot' | 'ConfirmIntent'
-  slots?: GetSuggestionsSlots | ScopeLyricSlots | WrongLyricSlots;
+  slots?: GetSuggestionsSlots | GetLyricDataSlots | WrongLyricDataSlots;
   fulfillmentState?: 'Fulfilled' | 'Failed';
   message?: {
     contentType: 'PlainText';
