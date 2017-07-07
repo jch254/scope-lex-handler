@@ -38,7 +38,7 @@ export default async function wrongLyricDataHandler(
               title: song.titleWithFeatured,
               subTitle: song.artistName,
               imageUrl: song.imageUrl,
-              url: song.url,
+              attachmentLinkUrl: song.url,
               buttons: [{
                 text: 'Scope this song!',
                 value: `${song.id}`,
