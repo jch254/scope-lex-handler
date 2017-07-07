@@ -38,6 +38,8 @@ export async function handler(event: MuzoEvent, context: Context, callback: Call
         break;
     }
 
+    console.log(`Response: ${response}`);
+
     return callback(undefined, response);
   } catch (err) {
     console.log(err);

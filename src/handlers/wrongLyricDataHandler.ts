@@ -1,6 +1,7 @@
 import MuzoEvent from '../MuzoEvent';
 import MuzoResponse from '../MuzoResponse';
 
+// TODO: Handle expired session
 export default async function wrongLyricDataHandler(
   event: MuzoEvent,
   lyricist: any,
@@ -24,7 +25,7 @@ export default async function wrongLyricDataHandler(
         responseCard: {
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
-          buttons: currentLyricDataGeniusSongs.slice(0, 5).map(song => ({ text: song.full_title, value: song.id })),
+          buttons: currentLyricDataGeniusSongs.map(song => ({ text: song.full_title, value: song.id })),
         },
       },
     };

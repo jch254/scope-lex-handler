@@ -9,7 +9,7 @@ export default async function getLyricDataHandler(
 ): Promise<MuzoResponse> {
   console.log('getLyricDataHandler');
 
-  const geniusSongs = await lyricist.search((event.currentIntent as GetLyricDataIntent).slots.lyric);
+  const geniusSongs: any[] = await lyricist.search((event.currentIntent as GetLyricDataIntent).slots.lyric);
   const fullGeniusSong = await lyricist.song(geniusSongs[0].id, { fetchLyrics: false });
 
   const spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider === 'spotify');
@@ -133,7 +133,7 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
 
   return {
     sessionAttributes: {
-      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs),
+      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(0, 5)),
     },
     dialogAction: {
       type: 'Close',
