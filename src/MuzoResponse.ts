@@ -28,7 +28,6 @@ interface DialogAction {
     version: 1;
     contentType: 'application/vnd.amazonaws.card.generic';
     genericAttachments?: GenericAttachment[];
-    buttons?: Button[];
   };
 }
 
