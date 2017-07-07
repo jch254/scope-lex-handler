@@ -25,25 +25,26 @@ export default async function getLyricDataHandler(
         
     const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
     audioFeatures = audioFeaturesResponse.body;
+  } else {
+    const spotifyTracks = await spotifyApi.searchTracks(
+      `track:${fullGeniusSong.title} artist:${fullGeniusSong.primary_artist.name}`,
+    );
+
+    if (spotifyTracks.body.tracks.total > 0) {
+      const spotifyTrack = spotifyTracks.body.tracks.items[0];
+
+      if (spotifyTrack.name === fullGeniusSong.title) {
+        const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrack.id);
+        audioFeatures = audioFeaturesResponse.body;
+      }
+    }
   }
-  // else {
-  //   const spotifyTracks = await spotifyApi.searchTracks(
-  //     `track:${fullGeniusSong.title} artist:${fullGeniusSong.primary_artist.name}`,
-  //   );
-
-  //   if (spotifyTracks.body.tracks.total > 0) {
-  //     const spotifyTrackId = spotifyTracks.body.tracks.items[0].id;
-
-  //     const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
-  //     audioFeatures = audioFeaturesResponse.body;
-  //   }
-  // }
 
   console.log(JSON.stringify(geniusSongs));
   console.log(JSON.stringify(fullGeniusSong));
   console.log(JSON.stringify(audioFeatures));
     
-  let responseMessage = `Title: ${fullGeniusSong.title}
+  let responseMessage = `Title: ${fullGeniusSong.title_with_featured}
 Artist: ${fullGeniusSong.primary_artist.name}`;
 
   if (fullGeniusSong.album !== null) {
