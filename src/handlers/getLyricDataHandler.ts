@@ -99,24 +99,24 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
 
   if (spotifyMedia !== undefined) {
     attachments.push({
-      title: fullGeniusSong.title_with_featured,
-      subTitle: fullGeniusSong.primary_artist.name,
+      title: fullGeniusSong.title_with_featured.substring(0, 80),
+      subTitle: fullGeniusSong.primary_artist.name.substring(0, 80),
       imageUrl: fullGeniusSong.song_art_image_url,
       attachmentLinkUrl: spotifyMedia.url,
     });
   }
 
   attachments.push({
-    title: fullGeniusSong.title_with_featured,
-    subTitle: fullGeniusSong.primary_artist.name,
+    title: fullGeniusSong.title_with_featured.substring(0, 80),
+    subTitle: fullGeniusSong.primary_artist.name.substring(0, 80),
     imageUrl: fullGeniusSong.song_art_image_url,
     attachmentLinkUrl: fullGeniusSong.url,
   });
 
   if (youtubeMedia !== undefined) {
     attachments.push({
-      title: fullGeniusSong.title_with_featured,
-      subTitle: fullGeniusSong.primary_artist.name,
+      title: fullGeniusSong.title_with_featured.substring(0, 80),
+      subTitle: fullGeniusSong.primary_artist.name.substring(0, 80),
       imageUrl: fullGeniusSong.song_art_image_url,
       attachmentLinkUrl: youtubeMedia.url,
     });
@@ -124,8 +124,8 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
 
   if (soundcloudMedia !== undefined) {
     attachments.push({
-      title: fullGeniusSong.title_with_featured,
-      subTitle: fullGeniusSong.primary_artist.name,
+      title: fullGeniusSong.title_with_featured.substring(0, 80),
+      subTitle: fullGeniusSong.primary_artist.name.substring(0, 80),
       imageUrl: fullGeniusSong.song_art_image_url,
       attachmentLinkUrl: soundcloudMedia.url,
     });

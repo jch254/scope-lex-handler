@@ -1,4 +1,4 @@
-import MuzoEvent from '../MuzoEvent';
+import MuzoEvent, { WrongLyricDataIntent } from '../MuzoEvent';
 import MuzoResponse from '../MuzoResponse';
 
 // TODO: Handle expired session
@@ -9,7 +9,10 @@ export default async function wrongLyricDataHandler(
 ): Promise<MuzoResponse> {
   console.log('wrongLyricDataHandler');
   
-  if (event.invocationSource === 'DialogCodeHook') {
+  if (
+    event.invocationSource === 'DialogCodeHook' &&
+    (event.currentIntent as WrongLyricDataIntent).slots.songId === null
+  ) {
     const currentLyricDataGeniusSongs: any[] = event.sessionAttributes.currentLyricDataGeniusSongs ?
       JSON.parse(event.sessionAttributes.currentLyricDataGeniusSongs) :
       [];
@@ -23,20 +26,22 @@ export default async function wrongLyricDataHandler(
           content: 'Which song did you want to scope?',
         },
         slots: {
-          lyric: null,
+          songId: null,
         },
-        slotToElicit: 'lyric',
+        slotToElicit: 'songId',
         responseCard: {
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
-          genericAttachments: [{
-            title: 'Which song did you want to scope?', 
-            buttons: currentLyricDataGeniusSongs
-              .map(song => ({
-                text: `${song.primary_artist.name} - ${song.title}`.substring(0, 80),
+          genericAttachments: currentLyricDataGeniusSongs
+            .map(song => ({
+              title: song.title_with_featured.substring(0, 80),
+              subTitle: song.primary_artist.name.substring(0, 80),
+              imageUrl: song.song_art_image_url,
+              buttons: [{
+                text: 'Scope this song!',
                 value: `${song.id}`,
-              })),
-          }],
+              }],
+            })),
         },
       },
     };

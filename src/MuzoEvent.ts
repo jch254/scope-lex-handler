@@ -21,7 +21,7 @@ export interface GetLyricDataIntent {
 }
 
 export interface WrongLyricDataSlots {
-  lyric: string | null;
+  songId: string | null;
 }
 
 export interface WrongLyricDataIntent {
