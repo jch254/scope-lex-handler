@@ -1,5 +1,5 @@
 interface MuzoSessionAttributes {
-  currentLyricDataGeniusSongs?: any[];
+  currentLyricDataGeniusSongs?: string;
 }
 
 export default MuzoSessionAttributes;

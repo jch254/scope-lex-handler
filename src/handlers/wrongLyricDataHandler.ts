@@ -9,6 +9,10 @@ export default async function wrongLyricDataHandler(
   console.log('wrongLyricDataHandler');
   
   if (event.invocationSource === 'DialogCodeHook') {
+    const currentLyricDataGeniusSongs: any[] = event.sessionAttributes.currentLyricDataGeniusSongs ?
+      JSON.parse(event.sessionAttributes.currentLyricDataGeniusSongs) :
+      [];
+
     return {
       dialogAction: {
         type: 'ConfirmIntent',
@@ -20,9 +24,7 @@ export default async function wrongLyricDataHandler(
         responseCard: {
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
-          buttons: (event.sessionAttributes.currentLyricDataGeniusSongs || [])
-            .slice(0, 5)
-            .map(song => ({ text: song.full_title, value: song.id })),
+          buttons: currentLyricDataGeniusSongs.slice(0, 5).map(song => ({ text: song.full_title, value: song.id })),
         },
       },
     };
