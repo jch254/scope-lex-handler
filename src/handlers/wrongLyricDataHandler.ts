@@ -30,7 +30,11 @@ export default async function wrongLyricDataHandler(
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
           genericAttachments: [{
-            buttons: currentLyricDataGeniusSongs.map(song => ({ text: song.full_title, value: song.id })),
+            buttons: currentLyricDataGeniusSongs
+              .map(song => ({
+                text: `${song.primary_artist.name} - ${song.title}`.substring(0, 80),
+                value: `${song.id}`,
+              })),
           }],
         },
       },
