@@ -131,10 +131,19 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
     });
   }
 
-  // TODO: Only store song properties used in wrongLyricDataHandler in sessionAttributes
+  const currentLyricDataGeniusSongs = geniusSongs
+    .slice(1, Math.min(geniusSongs.length, 11))
+    .map(song => ({
+      id: song.id,
+      titleWithFeatured: song.title_with_featured.substring(0, 80),
+      artistName: song.primary_artist.name.substring(0, 80),
+      imageUrl: song.header_image_url || song.song_art_thumbnail_url,
+      url: song.url,
+    }));
+
   return {
     sessionAttributes: {
-      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(1, Math.min(geniusSongs.length, 5))),
+      currentLyricDataGeniusSongs: JSON.stringify(currentLyricDataGeniusSongs),
     },
     dialogAction: {
       type: 'Close',

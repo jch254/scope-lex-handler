@@ -35,9 +35,10 @@ export default async function wrongLyricDataHandler(
           version: 1,
           genericAttachments: currentLyricDataGeniusSongs
             .map(song => ({
-              title: song.title_with_featured.substring(0, 80),
-              subTitle: song.primary_artist.name.substring(0, 80),
-              imageUrl: song.header_image_url || song.song_art_thumbnail_url,
+              title: song.titleWithFeatured,
+              subTitle: song.artistName,
+              imageUrl: song.imageUrl,
+              url: song.url,
               buttons: [{
                 text: 'Scope this song!',
                 value: `${song.id}`,
