@@ -18,13 +18,13 @@ export default async function getLyricDataHandler(
   const samples = fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs;
   const sampledIn = fullGeniusSong.song_relationships.find((r: any) => r.type === 'sampled_in').songs;
 
-  let audioFeatures;
+  let audioAnalysis;
   if (spotifyMedia !== undefined) {
     const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
     const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
 
-    const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
-    audioFeatures = audioFeaturesResponse.body;
+    const audioAnalysisResponse = await spotifyApi.getAudioAnalysisForTrack(spotifyTrackId);
+    audioAnalysis = audioAnalysisResponse.body.track;
   } else {
     const spotifyTracks = await spotifyApi.searchTracks(
       `track:${fullGeniusSong.title} artist:${fullGeniusSong.primary_artist.name}`,
@@ -34,15 +34,15 @@ export default async function getLyricDataHandler(
       const spotifyTrack = spotifyTracks.body.tracks.items[0];
 
       if (spotifyTrack.name === fullGeniusSong.title) {
-        const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrack.id);
-        audioFeatures = audioFeaturesResponse.body;
+        const audioAnalysisResponse = await spotifyApi.getAudioAnalysisForTrack(spotifyTrack.id);
+        audioAnalysis = audioAnalysisResponse.body.track;
       }
     }
   }
 
   console.log(JSON.stringify(geniusSongs));
   console.log(JSON.stringify(fullGeniusSong));
-  console.log(JSON.stringify(audioFeatures));
+  console.log(JSON.stringify(audioAnalysis));
 
   let responseMessage = `Title: ${fullGeniusSong.title_with_featured}
 Artist: ${fullGeniusSong.primary_artist.name}`;
@@ -57,14 +57,15 @@ Album: ${fullGeniusSong.album.name}`;
 Release date: ${fullGeniusSong.release_date}`;
   }
 
-  if (audioFeatures !== undefined) {
+  if (audioAnalysis !== undefined) {
     responseMessage += `
-BPM: ${audioFeatures.tempo}`;
+BPM: ${audioAnalysis.tempo} (${audioAnalysis.tempo_confidence * 100}% confident)`;
   }
 
-  if (audioFeatures !== undefined) {
+  if (audioAnalysis !== undefined) {
     responseMessage += `
-Key: ${mapPitchClassToKey(audioFeatures.key)} ${mapMode(audioFeatures.mode)}`;
+Key: ${mapPitchClassToKey(audioAnalysis.key)} ${mapMode(audioAnalysis.mode)} \
+(${audioAnalysis.key_confidence * 100}% confident)`;
   }
 
   if (samples.length > 0) {
