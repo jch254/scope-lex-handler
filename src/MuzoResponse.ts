@@ -15,10 +15,11 @@ interface GenericAttachment {
 }
 
 interface DialogAction {
-  type: 'Delegate' | 'Close' | 'ConfirmIntent'; // 'ElicitIntent' | 'ElicitSlot'
+  type: 'Delegate' | 'Close' | 'ConfirmIntent' | 'ElicitSlot' | 'ElicitIntent';
   slots?: GetSuggestionsSlots | GetLyricDataSlots | WrongLyricDataSlots;
   fulfillmentState?: 'Fulfilled' | 'Failed';
   intentName?: string;
+  slotToElicit?: string;
   message?: {
     contentType: 'PlainText';
     content: string;

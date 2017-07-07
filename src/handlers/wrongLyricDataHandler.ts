@@ -16,12 +16,16 @@ export default async function wrongLyricDataHandler(
 
     return {
       dialogAction: {
-        type: 'ConfirmIntent',
+        type: 'ElicitSlot',
+        intentName: 'WrongLyricData',
         message: {
           contentType: 'PlainText',
-          content: 'Which song were you searching for?',
+          content: 'Which song did you want to scope?',
         },
-        intentName: 'WrongLyricData',
+        slots: {
+          lyric: null,
+        },
+        slotToElicit: 'lyric',
         responseCard: {
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
