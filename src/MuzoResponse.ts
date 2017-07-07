@@ -15,9 +15,10 @@ interface GenericAttachment {
 }
 
 interface DialogAction {
-  type: 'Delegate' | 'Close'; // 'ElicitIntent' | 'ElicitSlot' | 'ConfirmIntent'
+  type: 'Delegate' | 'Close' | 'ConfirmIntent'; // 'ElicitIntent' | 'ElicitSlot'
   slots?: GetSuggestionsSlots | GetLyricDataSlots | WrongLyricDataSlots;
   fulfillmentState?: 'Fulfilled' | 'Failed';
+  intentName?: string;
   message?: {
     contentType: 'PlainText';
     content: string;
@@ -25,7 +26,8 @@ interface DialogAction {
   responseCard?: {
     version: 1;
     contentType: 'application/vnd.amazonaws.card.generic';
-    genericAttachments: GenericAttachment[];
+    genericAttachments?: GenericAttachment[];
+    buttons?: Button[];
   };
 }
 

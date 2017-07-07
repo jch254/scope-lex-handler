@@ -1,25 +1,44 @@
 import MuzoEvent from '../MuzoEvent';
 import MuzoResponse from '../MuzoResponse';
 
-// TODO: Grab currentLyricDataGeniusSongs from sessionAttributes
-// TODO: Return responseCard with buttons to select one of the first five currentLyricDataGeniusSongs
-// TODO: Return the same data as getLyricDataHandler after song selected
 export default async function wrongLyricDataHandler(
   event: MuzoEvent,
   lyricist: any,
   spotifyApi: any,
 ): Promise<MuzoResponse> {
   console.log('wrongLyricDataHandler');
-
-  return {
-    dialogAction: {
-      type: 'Close',
-      fulfillmentState: 'Fulfilled',
-      message: {
-        contentType: 'PlainText',
-        content: 'Coming soon!',
+  
+  if (event.invocationSource === 'DialogCodeHook') {
+    return {
+      dialogAction: {
+        type: 'ConfirmIntent',
+        message: {
+          contentType: 'PlainText',
+          content: 'Which song were you searching for?',
+        },
+        intentName: 'WrongLyricData',
+        responseCard: {
+          contentType: 'application/vnd.amazonaws.card.generic',
+          version: 1,
+          buttons: (event.sessionAttributes.currentLyricDataGeniusSongs || [])
+            .slice(0, 5)
+            .map(song => ({ text: song.full_title, value: song.id })),
+        },
       },
-    },
-  };
+    };
+  } else {
+    // TODO: Return the same data as getLyricDataHandler
+
+    return {
+      dialogAction: {
+        type: 'Close',
+        fulfillmentState: 'Fulfilled',
+        message: {
+          contentType: 'PlainText',
+          content: 'Coming soon!',
+        },
+      },
+    };
+  }
 }
 

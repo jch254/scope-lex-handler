@@ -132,6 +132,9 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
   }
 
   return {
+    sessionAttributes: {
+      currentLyricDataGeniusSongs: geniusSongs,
+    },
     dialogAction: {
       type: 'Close',
       fulfillmentState: 'Fulfilled',
