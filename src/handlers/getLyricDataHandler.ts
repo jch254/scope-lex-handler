@@ -131,9 +131,10 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
     });
   }
 
+  // TODO: Only store song properties used in wrongLyricDataHandler in sessionAttributes
   return {
     sessionAttributes: {
-      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(0, Math.min(geniusSongs.length, 5))),
+      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(1, Math.min(geniusSongs.length, 5))),
     },
     dialogAction: {
       type: 'Close',

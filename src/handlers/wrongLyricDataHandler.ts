@@ -2,7 +2,7 @@ import { mapMode, mapPitchClassToKey } from '../utils';
 import MuzoEvent, { WrongLyricDataIntent } from '../MuzoEvent';
 import MuzoResponse from '../MuzoResponse';
 
-// TODO: Handle expired session
+// TODO: Handle expired/invalid sessions
 export default async function wrongLyricDataHandler(
   event: MuzoEvent,
   lyricist: any,
