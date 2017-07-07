@@ -17,12 +17,12 @@ export default async function getLyricDataHandler(
   const soundcloudMedia = fullGeniusSong.media.find((media: any) => media.provider === 'soundcloud');
   const samples = fullGeniusSong.song_relationships.find((r: any) => r.type === 'samples').songs;
   const sampledIn = fullGeniusSong.song_relationships.find((r: any) => r.type === 'sampled_in').songs;
-      
+
   let audioFeatures;
   if (spotifyMedia !== undefined) {
     const spotifyNativeUriParts = spotifyMedia.native_uri.split(':');
     const spotifyTrackId = spotifyNativeUriParts[spotifyNativeUriParts.length - 1];
-        
+
     const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
     audioFeatures = audioFeaturesResponse.body;
   } else {
@@ -43,7 +43,7 @@ export default async function getLyricDataHandler(
   console.log(JSON.stringify(geniusSongs));
   console.log(JSON.stringify(fullGeniusSong));
   console.log(JSON.stringify(audioFeatures));
-    
+
   let responseMessage = `Title: ${fullGeniusSong.title_with_featured}
 Artist: ${fullGeniusSong.primary_artist.name}`;
 
@@ -133,7 +133,7 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
 
   return {
     sessionAttributes: {
-      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(0, 5)),
+      currentLyricDataGeniusSongs: JSON.stringify(geniusSongs.slice(0, Math.min(geniusSongs.length, 10))),
     },
     dialogAction: {
       type: 'Close',
