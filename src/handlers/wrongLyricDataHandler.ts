@@ -30,6 +30,7 @@ export default async function wrongLyricDataHandler(
           contentType: 'application/vnd.amazonaws.card.generic',
           version: 1,
           genericAttachments: [{
+            title: 'Which song did you want to scope?', 
             buttons: currentLyricDataGeniusSongs
               .map(song => ({
                 text: `${song.primary_artist.name} - ${song.title}`.substring(0, 80),

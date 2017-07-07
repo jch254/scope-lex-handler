@@ -7,7 +7,7 @@ interface Button {
 }
 
 interface GenericAttachment {
-  title?: string;
+  title: string;
   subTitle?: string;
   imageUrl?: string;
   attachmentLinkUrl?: string;
