@@ -59,13 +59,13 @@ Release date: ${fullGeniusSong.release_date}`;
 
   if (audioAnalysis !== undefined) {
     responseMessage += `
-BPM: ${audioAnalysis.tempo} (${audioAnalysis.tempo_confidence * 100}% confident)`;
+BPM: ${audioAnalysis.tempo.toFixed(0)} (${(audioAnalysis.tempo_confidence * 100).toFixed(0)}% confident)`;
   }
 
   if (audioAnalysis !== undefined) {
     responseMessage += `
 Key: ${mapPitchClassToKey(audioAnalysis.key)} ${mapMode(audioAnalysis.mode)} \
-(${audioAnalysis.key_confidence * 100}% confident)`;
+(${(audioAnalysis.key_confidence * 100).toFixed(0)}% confident)`;
   }
 
   if (samples.length > 0) {
@@ -138,7 +138,7 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
       id: song.id,
       titleWithFeatured: song.title_with_featured.substring(0, 80),
       artistName: song.primary_artist.name.substring(0, 80),
-      imageUrl: song.header_image_url || song.song_art_thumbnail_url,
+      imageUrl: song.song_art_thumbnail_url,
       url: song.url,
     }));
 
