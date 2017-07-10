@@ -1,13 +1,13 @@
 import { mapMode, mapPitchClassToKey } from '../utils';
-import MuzoEvent, { WrongLyricDataIntent } from '../MuzoEvent';
-import MuzoResponse from '../MuzoResponse';
+import LexEvent, { WrongLyricDataIntent } from '../LexEvent';
+import LexResponse from '../LexResponse';
 
 // TODO: Handle expired/invalid sessions
 export default async function wrongLyricDataHandler(
-  event: MuzoEvent,
+  event: LexEvent,
   lyricist: any,
   spotifyApi: any,
-): Promise<MuzoResponse> {
+): Promise<LexResponse> {
   console.log('wrongLyricDataHandler');
   
   if (

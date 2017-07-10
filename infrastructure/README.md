@@ -1,6 +1,6 @@
 # Deployment/Infrastructure
 
-Muzo-fulfillment-handler is a Lambda function built, tested and deployed to AWS by CodePipeline and Codebuild.
+Scope-lex-handler is a Lambda function built, tested and deployed to AWS by CodePipeline and Codebuild.
 
 ---
 

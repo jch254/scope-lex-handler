@@ -1,5 +1,5 @@
-import { GetLyricDataSlots, GetSuggestionsSlots, WrongLyricDataSlots } from './MuzoEvent';
-import MuzoSessionAttributes from './MuzoSessionAttributes';
+import { GetLyricDataSlots, GetSuggestionsSlots, WrongLyricDataSlots } from './LexEvent';
+import SessionAttributes from './SessionAttributes';
 
 interface Button {
   text: string;
@@ -31,9 +31,9 @@ interface DialogAction {
   };
 }
 
-interface MuzoResponse {
-  sessionAttributes?: MuzoSessionAttributes;
+interface LexResponse {
+  sessionAttributes?: SessionAttributes;
   dialogAction: DialogAction;
 }
 
-export default MuzoResponse;
+export default LexResponse;

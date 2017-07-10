@@ -5,7 +5,7 @@ import * as SpotifyWebApi from 'spotify-web-api-node';
 import handleGetLyricDataIntent from './handlers/getLyricDataHandler';
 import handleGetSuggestionsIntent from './handlers/getSuggestionsHandler';
 import handleWrongLyricDataIntent from './handlers/wrongLyricDataHandler';
-import MuzoEvent from './MuzoEvent';
+import LexEvent from './LexEvent';
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
 const spotifyApi = new SpotifyWebApi({
@@ -15,7 +15,7 @@ const spotifyApi = new SpotifyWebApi({
 
 // TODO: Handle error/failed states
 // TODO: Create @types/lyricist and @types/spotify-web-api-node
-export async function handler(event: MuzoEvent, context: Context, callback: Callback) {
+export async function handler(event: LexEvent, context: Context, callback: Callback) {
   console.log(`Event: ${JSON.stringify(event)}`);
 
   try {

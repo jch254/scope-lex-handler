@@ -1,12 +1,12 @@
 import { mapMode, mapPitchClassToKey } from '../utils';
-import MuzoEvent, { GetLyricDataIntent } from '../MuzoEvent';
-import MuzoResponse from '../MuzoResponse';
+import LexEvent, { GetLyricDataIntent } from '../LexEvent';
+import LexResponse from '../LexResponse';
 
 export default async function getLyricDataHandler(
-  event: MuzoEvent,
+  event: LexEvent,
   lyricist: any,
   spotifyApi: any,
-): Promise<MuzoResponse> {
+): Promise<LexResponse> {
   console.log('getLyricDataHandler');
 
   const geniusSongs: any[] = await lyricist.search((event.currentIntent as GetLyricDataIntent).slots.lyric);

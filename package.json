@@ -1,7 +1,7 @@
 {
-  "name": "muzo-fulfillment-handler",
+  "name": "scope-lex-handler",
   "version": "1.0.0",
-  "description": "Muzo fulfillment handler",
+  "description": "Scope Lex handler",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon -e ts -w src/ -x 'ts-node src/'",
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jch254/muzo-fulfillment-handler"
+    "url": "https://github.com/jch254/scope-lex-handler"
   },
   "author": "Jordan Hornblow",
   "dependencies": {

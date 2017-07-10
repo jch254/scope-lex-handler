@@ -1,4 +1,4 @@
-import MuzoSessionAttributes from './MuzoSessionAttributes';
+import SessionAttributes from './SessionAttributes';
 
 export interface GetSuggestionsSlots {
   track: string | null;
@@ -29,10 +29,10 @@ export interface WrongLyricDataIntent {
   slots: WrongLyricDataSlots;
 }
 
-interface MuzoEvent {
+interface LexEvent {
   currentIntent: GetSuggestionsIntent | GetLyricDataIntent | WrongLyricDataIntent;
   invocationSource: 'DialogCodeHook' | 'FulfillmentCodeHook';
-  sessionAttributes: MuzoSessionAttributes;
+  sessionAttributes: SessionAttributes;
   inputTranscript: string;
   userId: string;
 
@@ -43,4 +43,4 @@ interface MuzoEvent {
   };
 }
 
-export default MuzoEvent;
+export default LexEvent;
