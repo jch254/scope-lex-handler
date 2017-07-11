@@ -13,7 +13,6 @@ const spotifyApi = new SpotifyWebApi({
   clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
 });
 
-// TODO: Handle error/failed states
 // TODO: Create @types/lyricist and @types/spotify-web-api-node
 export async function handler(event: LexEvent, context: Context, callback: Callback) {
   try {

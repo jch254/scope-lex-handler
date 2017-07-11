@@ -1,6 +1,6 @@
 # Scope-lex-handler
 
-AWS Lex/Facebook-powered bot that identifies music from typed lyrics/song titles.
+AWS Lex/Facebook-powered bot that identifies songs from lyrics/titles.
 
 ### Deployment/Infrastructure
 

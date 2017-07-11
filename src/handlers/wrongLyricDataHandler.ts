@@ -11,9 +11,9 @@ export interface WrongLyricDataIntent {
 export default async function wrongLyricDataHandler(event: LexEvent): Promise<LexResponse> {
   console.log('wrongLyricDataHandler');
   
-  const currentGeniusMatches: any[] = event.sessionAttributes.currentGeniusMatches ?
-      JSON.parse(event.sessionAttributes.currentGeniusMatches) :
-      [];
+  const currentGeniusMatches: any[] = event.sessionAttributes.currentGeniusMatches !== undefined ?
+    JSON.parse(event.sessionAttributes.currentGeniusMatches) :
+    [];
 
   if (currentGeniusMatches.length === 0) {
     return {

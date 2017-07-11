@@ -193,9 +193,9 @@ ${fullGeniusSong.writer_artists.map((w: any) => `- ${w.name}`).join('\n')}`;
       undefined;
 
   return {
-    sessionAttributes: {
-      currentGeniusMatches: currentGeniusMatches !== undefined ? JSON.stringify(currentGeniusMatches) : undefined,
-    },
+    sessionAttributes: currentGeniusMatches !== undefined ?
+      { currentGeniusMatches: JSON.stringify(currentGeniusMatches) } :
+      {},
     dialogAction: {
       type: 'Close',
       fulfillmentState: 'Fulfilled',
