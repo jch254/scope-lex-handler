@@ -24,6 +24,20 @@ export default async function getLyricDataHandler(
 
   const intent = event.currentIntent as GetLyricDataIntent;
 
+  if (intent.slots.lyric === null && intent.slots.geniusSongId === null) {
+    return {
+      sessionAttributes: {},
+      dialogAction: {
+        type: 'Close',
+        fulfillmentState: 'Fulfilled',
+        message: {
+          contentType: 'PlainText',
+          content: `Damn! Scope found no matches... Try scope another lyric or title.`,
+        },
+      },
+    };
+  }
+
   let geniusMatches: any[] = [];
   if (intent.slots.lyric !== null) {
     geniusMatches = await lyricist.search(intent.slots.lyric);
