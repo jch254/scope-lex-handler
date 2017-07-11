@@ -32,6 +32,7 @@ export default async function getLyricDataHandler(
 
     if (geniusMatches.length === 0) {
       return {
+        sessionAttributes: {},
         dialogAction: {
           type: 'Close',
           fulfillmentState: 'Fulfilled',

@@ -12,6 +12,7 @@ export default async function getStartedHandler(event: LexEvent): Promise<LexRes
   console.log('getStartedHandler');
   
   return {
+    sessionAttributes: {},
     dialogAction: {
       type: 'ElicitIntent',
       message: {
@@ -23,9 +24,9 @@ Scope is a bot that identifies songs from lyrics/titles.
 It's easy to scope a song - just send the word 'scope' followed by the lyric or title you're looking for. \
 Scope will reply with details of the closest match.
 
-Here's an example you can copy and send back: scope I got the digital dash
+Here's an example to try: scope I got the digital dash
 
-If Scope matches the wrong song, simply reply with the word 'wrong' to select the right song.`,
+If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.`,
       },
     },
   };

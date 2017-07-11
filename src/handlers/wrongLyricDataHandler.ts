@@ -17,6 +17,7 @@ export default async function wrongLyricDataHandler(event: LexEvent): Promise<Le
 
   if (currentGeniusMatches.length === 0) {
     return {
+      sessionAttributes: {},
       dialogAction: {
         type: 'ElicitIntent',
         message: {
@@ -27,6 +28,7 @@ export default async function wrongLyricDataHandler(event: LexEvent): Promise<Le
     };
   } else {
     return {
+      sessionAttributes: {},
       dialogAction: {
         type: 'ElicitIntent',
         message: {
@@ -44,7 +46,7 @@ export default async function wrongLyricDataHandler(event: LexEvent): Promise<Le
               attachmentLinkUrl: song.url,
               buttons: [{
                 text: 'Scope it!',
-                value: `AccurateScope ${song.id}`,
+                value: `ExactMatch ${song.id}`,
               }],
             })),
         },
