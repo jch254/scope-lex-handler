@@ -3,7 +3,7 @@ import * as Lyricist from 'lyricist/node6';
 import * as SpotifyWebApi from 'spotify-web-api-node';
 
 import handleGetLyricDataIntent from './handlers/getLyricDataHandler';
-import handleGetSuggestionsIntent from './handlers/getSuggestionsHandler';
+import handleGetStarted from './handlers/getStartedHandler';
 import handleWrongLyricDataIntent from './handlers/wrongLyricDataHandler';
 import LexEvent from './LexEvent';
 
@@ -16,23 +16,20 @@ const spotifyApi = new SpotifyWebApi({
 // TODO: Handle error/failed states
 // TODO: Create @types/lyricist and @types/spotify-web-api-node
 export async function handler(event: LexEvent, context: Context, callback: Callback) {
-  console.log(`Event: ${JSON.stringify(event)}`);
-
   try {
+    console.log(`Event: ${JSON.stringify(event)}`);
+
     let response = {};
 
-    const authData = await spotifyApi.clientCredentialsGrant();
-    spotifyApi.setAccessToken(authData.body['access_token']);
-
     switch (event.currentIntent.name) {
-      case 'GetSuggestions':
-        response = await handleGetSuggestionsIntent(event, lyricist, spotifyApi);
+      case 'GetStarted':
+        response = await handleGetStarted(event);
         break;
       case 'GetLyricData':
         response = await handleGetLyricDataIntent(event, lyricist, spotifyApi);
         break;
       case 'WrongLyricData':
-        response = await handleWrongLyricDataIntent(event, lyricist, spotifyApi);
+        response = await handleWrongLyricDataIntent(event);
         break;
       default:
         break;

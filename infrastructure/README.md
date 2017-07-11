@@ -17,7 +17,7 @@ To deploy to AWS, you must:
 
 ### Deploying infrastructure
 
-1. Export all environment variables beginnging with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
+1. Export all environment variables beginning with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
 1. Initialise Terraform:
 ```
 terraform init \
@@ -31,7 +31,7 @@ terraform init \
 
 ### Updating infrastructure
 
-1. Export all environment variables beginnging with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
+1. Export all environment variables beginning with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
 1. Make necessary infrastructure code changes.
 1. Initialise Terraform:
 ```
@@ -46,7 +46,7 @@ terraform init \
 
 ### Destroying infrastructure (use with care)
 
-1. Export all environment variables beginnging with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
+1. Export all environment variables beginning with TF_VAR_ as per [buildspec.yml](../buildspec.yml)
 1. Initialise Terraform:
 ```
 terraform init \

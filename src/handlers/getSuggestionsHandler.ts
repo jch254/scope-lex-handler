@@ -1,8 +1,19 @@
 import LexEvent from '../LexEvent';
 import LexResponse from '../LexResponse';
 
-// TODO: Get track, genre and artist ids via Spotify API after each response from user and store in sessionAttributes
-// TODO: Send getRecommendations request to Spotify API using track, genre and artist ids
+export interface GetSuggestionsSlots {
+  song: string | null;
+  genre: string | null;
+  artist: string | null;
+}
+
+export interface GetSuggestionsIntent {
+  name: 'GetSuggestions';
+  slots: GetSuggestionsSlots;
+}
+
+// TODO: Get song, genre and artist ids via Spotify API after each response from user and store in sessionAttributes
+// TODO: Send getRecommendations request to Spotify API using song, genre and artist ids
 // TODO: Refine min_popularity
 export default async function getSuggestionsHandler(
   event: LexEvent,
@@ -24,7 +35,7 @@ export default async function getSuggestionsHandler(
       fulfillmentState: 'Fulfilled',
       message: {
         contentType: 'PlainText',
-        content: JSON.stringify('Coming soon!'),
+        content: 'Coming soon!',
       },
     },
   };

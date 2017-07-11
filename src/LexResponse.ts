@@ -1,4 +1,7 @@
-import { GetLyricDataSlots, GetSuggestionsSlots, WrongLyricDataSlots } from './LexEvent';
+
+import { GetLyricDataSlots } from './handlers/getLyricDataHandler';
+import { GetStartedSlots } from './handlers/getStartedHandler';
+import { WrongLyricDataSlots } from './handlers/wrongLyricDataHandler';
 import SessionAttributes from './SessionAttributes';
 
 interface Button {
@@ -16,7 +19,7 @@ interface GenericAttachment {
 
 interface DialogAction {
   type: 'Delegate' | 'Close' | 'ConfirmIntent' | 'ElicitSlot' | 'ElicitIntent';
-  slots?: GetSuggestionsSlots | GetLyricDataSlots | WrongLyricDataSlots;
+  slots?: GetStartedSlots | GetLyricDataSlots | WrongLyricDataSlots;
   fulfillmentState?: 'Fulfilled' | 'Failed';
   intentName?: string;
   slotToElicit?: string;

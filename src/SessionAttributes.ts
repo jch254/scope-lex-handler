@@ -1,5 +1,5 @@
 interface SessionAttributes {
-  currentLyricDataGeniusSongs?: string;
+  currentGeniusMatches?: string;
 }
 
 export default SessionAttributes;
