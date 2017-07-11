@@ -27,6 +27,8 @@ export default async function getLyricDataHandler(
   let geniusMatches: any[] = [];
   if (intent.slots.lyric !== null) {
     geniusMatches = await lyricist.search(intent.slots.lyric);
+   
+    console.log(`geniusMatches: ${JSON.stringify(geniusMatches)}`);
 
     if (geniusMatches.length === 0) {
       return {
@@ -47,6 +49,10 @@ export default async function getLyricDataHandler(
     { fetchLyrics: false },
   );
 
+  // TODO: Handle null fullGeniusSong
+
+  console.log(`fullGeniusSong: ${JSON.stringify(fullGeniusSong)}`);
+
   let spotifyMedia = fullGeniusSong.media.find((media: any) => media.provider.toLowerCase() === 'spotify');
   const youtubeMedia = fullGeniusSong.media.find((media: any) => media.provider.toLowerCase() === 'youtube');
   const soundcloudMedia = fullGeniusSong.media.find((media: any) => media.provider.toLowerCase() === 'soundcloud');
@@ -64,7 +70,7 @@ export default async function getLyricDataHandler(
     audioFeatures = audioFeaturesResponse.body;
   } else {
     const spotifyTracks = await spotifyApi.searchTracks(`track:${fullGeniusSong.title.trim()}\
-${fullGeniusSong.album !== null ? `album:${fullGeniusSong.album.name.trim()}` : ''}`);
+${fullGeniusSong.album !== null ? ` album:${fullGeniusSong.album.name.trim()}` : ''}`);
 
     console.log(`spotifyTracks: ${JSON.stringify(spotifyTracks)}`);
 
@@ -75,12 +81,10 @@ ${fullGeniusSong.album !== null ? `album:${fullGeniusSong.album.name.trim()}` : 
 
       const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrack.id);
       audioFeatures = audioFeaturesResponse.body.track;
+
+      console.log(`audioFeatures: ${JSON.stringify(audioFeatures)}`);
     }
   }
-
-  console.log(`geniusMatches: ${JSON.stringify(geniusMatches)}`);
-  console.log(`fullGeniusSong: ${JSON.stringify(fullGeniusSong)}`);
-  console.log(`audioFeatures: ${JSON.stringify(audioFeatures)}`);
 
   let responseMessage = `Title: ${fullGeniusSong.title_with_featured}
 Artist: ${fullGeniusSong.primary_artist.name}`;
@@ -102,7 +106,6 @@ Recording location: ${fullGeniusSong.recording_location}`;
 
   if (audioFeatures !== undefined) {
     responseMessage += `
-
 BPM: ${audioFeatures.tempo.toFixed(0)}
 Key: ${mapPitchClassToKey(audioFeatures.key)} ${mapMode(audioFeatures.mode)}`;
   }
