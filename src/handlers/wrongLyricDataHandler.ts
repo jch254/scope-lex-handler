@@ -46,7 +46,7 @@ export default async function wrongLyricDataHandler(event: LexEvent): Promise<Le
               attachmentLinkUrl: song.url,
               buttons: [{
                 text: 'Scope it!',
-                value: `ExactMatch ${song.id}`,
+                value: `Exact ${song.id}`,
               }],
             })),
         },
