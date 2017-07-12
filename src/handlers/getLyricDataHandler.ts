@@ -95,7 +95,7 @@ ${fullGeniusSong.album !== null ? ` album:${fullGeniusSong.album.name.trim()}` :
       spotifyMedia = { url: spotifyTrack.external_urls.spotify };
 
       const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrack.id);
-      audioFeatures = audioFeaturesResponse.body.track;
+      audioFeatures = audioFeaturesResponse.body;
 
       console.log(`audioFeatures: ${JSON.stringify(audioFeatures)}`);
     }
