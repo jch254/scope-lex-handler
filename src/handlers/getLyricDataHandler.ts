@@ -116,7 +116,7 @@ Release date: ${fullGeniusSong.release_date}`;
 
   if (fullGeniusSong.recording_location !== null) {
     responseMessage += `
-Recording location: ${fullGeniusSong.recording_location}`;
+Recorded at: ${fullGeniusSong.recording_location}`;
   }
 
   if (audioFeatures !== undefined) {

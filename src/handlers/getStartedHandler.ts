@@ -24,9 +24,20 @@ Scope is a bot that identifies songs from lyrics/titles.
 It's easy to scope a song - just send the word 'scope' followed by the lyric or title you're looking for. \
 Scope will reply with details of the closest match.
 
-Here's an example to try: scope I got the digital dash
-
-If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.`,
+If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next ten matches.`,
+      },
+      responseCard: {
+        contentType: 'application/vnd.amazonaws.card.generic',
+        version: 1,
+        genericAttachments: [{
+          title: 'Example',
+          subTitle: 'Press the button below to try out Scope',
+          imageUrl: 'https://img.jch254.com/Scope.jpg',
+          buttons: [{
+            text: 'Scope waves',
+            value: `Scope waves`,
+          }],
+        }],
       },
     },
   };
