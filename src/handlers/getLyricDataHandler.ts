@@ -84,8 +84,9 @@ export default async function getLyricDataHandler(
     const audioFeaturesResponse = await spotifyApi.getAudioFeaturesForTrack(spotifyTrackId);
     audioFeatures = audioFeaturesResponse.body;
   } else {
-    const spotifyTracks = await spotifyApi.searchTracks(`track:${fullGeniusSong.title.trim()}\
-${fullGeniusSong.album !== null ? ` album:${fullGeniusSong.album.name.trim()}` : ''}`);
+    const spotifyTracks = await spotifyApi.searchTracks(`track:"${fullGeniusSong.title.trim()}"\
+${fullGeniusSong.album !== null ? ` album:"${fullGeniusSong.album.name.trim()}"` : ''}\
+${fullGeniusSong.release_date !== null ? ` year:${fullGeniusSong.release_date.substring(0, 4)}` : ''}`);
 
     console.log(`spotifyTracks: ${JSON.stringify(spotifyTracks)}`);
 
@@ -101,7 +102,7 @@ ${fullGeniusSong.album !== null ? ` album:${fullGeniusSong.album.name.trim()}` :
     }
   }
 
-  let responseMessage = `Title: ${fullGeniusSong.title_with_featured}
+  let responseMessage = `Title: ${fullGeniusSong.title}
 Artist: ${fullGeniusSong.primary_artist.name}`;
 
   if (fullGeniusSong.album !== null) {
@@ -137,6 +138,13 @@ ${samples.map((s: any) => `- ${s.full_title}`).join('\n')}`;
 
 Sampled in
 ${sampledIn.map((s: any) => `- ${s.full_title}`).join('\n')}`;
+  }
+
+  if (fullGeniusSong.featured_artists.length > 0) {
+    responseMessage += `
+
+Featuring
+${fullGeniusSong.featured_artists.map((f: any) => `- ${f.name}`).join('\n')}`;
   }
 
   if (fullGeniusSong.producer_artists.length > 0) {
