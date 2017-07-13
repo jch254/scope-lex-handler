@@ -21,8 +21,9 @@ export default async function getStartedHandler(event: LexEvent): Promise<LexRes
 
 Scope is a bot that identifies songs from lyrics/titles.
 
-It's easy to scope a song - just send the word 'scope' followed by the lyric or title you're looking for. \
-Scope will reply with details of the closest match. Try including the artist's name for extra accuracy.
+It's easy to scope a song - just send a message starting with 'scope' followed by the lyric or title you're after \
+(e.g. scope waves). Scope will reply with details of the closest match. \
+Try including the artist's name for extra accuracy.
 
 If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.`,
       },
