@@ -42,6 +42,18 @@ export async function handler(event: LexEvent, context: Context, callback: Callb
   } catch (err) {
     console.log(err);
 
-    return callback(err);
+    const errorResponse = {
+      sessionAttributes: {},
+      dialogAction: {
+        type: 'Close',
+        fulfillmentState: 'Failed',
+        message: {
+          contentType: 'PlainText',
+          content: `Damn! Scope is having trouble right now... Try scope another lyric or title or come back later.`,
+        },
+      },
+    };
+
+    return callback(undefined, errorResponse);
   }
 }
