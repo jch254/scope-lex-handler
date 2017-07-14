@@ -35,7 +35,8 @@ phases:
       - SPOTIFY_CLIENT_ID=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/spotify-client-id" --with-decryption --query Parameters[0].Value)
       - SPOTIFY_CLIENT_SECRET=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/spotify-client-secret" --with-decryption --query Parameters[0].Value)
       - GENIUS_ACCESS_TOKEN=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/genius-access-token" --with-decryption --query Parameters[0].Value)
-      - export TF_VAR_environment_variables="{ SPOTIFY_CLIENT_ID = $SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET = $SPOTIFY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN = $GENIUS_ACCESS_TOKEN }"
+      - PAGE_ACCESS_TOKEN=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/page-access-token" --with-decryption --query Parameters[0].Value)
+      - export TF_VAR_environment_variables="{ SPOTIFY_CLIENT_ID = $SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET = $SPOTIFY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN = $GENIUS_ACCESS_TOKEN, PAGE_ACCESS_TOKEN = $PAGE_ACCESS_TOKEN }"
 
       - export TF_VAR_github_oauth_token=$(aws ssm get-parameters --region $TF_VAR_region --name "/shared/github-token" --with-decryption --query Parameters[0].Value --output text)
 

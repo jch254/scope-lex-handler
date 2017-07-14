@@ -1,6 +1,7 @@
 import { mapMode, mapPitchClassToKey } from '../utils';
 import LexEvent from '../LexEvent';
 import LexResponse from '../LexResponse';
+import UserProfile from '../UserProfile';
 
 export interface GetLyricDataSlots {
   lyric: string | null;
@@ -14,6 +15,7 @@ export interface GetLyricDataIntent {
 
 export default async function getLyricDataHandler(
   event: LexEvent,
+  userProfile: UserProfile,
   lyricist: any,
   spotifyApi: any,
 ): Promise<LexResponse> {
@@ -32,7 +34,7 @@ export default async function getLyricDataHandler(
         fulfillmentState: 'Fulfilled',
         message: {
           contentType: 'PlainText',
-          content: `Damn! Scope found no matches... Try scope another lyric or title.`,
+          content: `Damn ${userProfile.first_name}! Scope found no matches... Try scope another lyric or title.`,
         },
       },
     };
@@ -52,7 +54,8 @@ export default async function getLyricDataHandler(
           fulfillmentState: 'Fulfilled',
           message: {
             contentType: 'PlainText',
-            content: `Damn! Scope found no matches for '${intent.slots.lyric}'... Try scope another lyric or title.`,
+            content: `Damn ${userProfile.first_name}! Scope found no matches for '${intent.slots.lyric}'... \
+Try scope another lyric or title.`,
           },
         },
       };
@@ -63,8 +66,6 @@ export default async function getLyricDataHandler(
     intent.slots.geniusSongId !== null ? intent.slots.geniusSongId : geniusMatches[0].id,
     { fetchLyrics: false },
   );
-
-  // TODO: Handle null fullGeniusSong
 
   console.log(`fullGeniusSong: ${JSON.stringify(fullGeniusSong)}`);
 

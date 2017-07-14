@@ -5,6 +5,7 @@ import * as SpotifyWebApi from 'spotify-web-api-node';
 import handleGetLyricDataIntent from './handlers/getLyricDataHandler';
 import handleGetStarted from './handlers/getStartedHandler';
 import handleWrongLyricDataIntent from './handlers/wrongLyricDataHandler';
+import { getUserProfile } from './utils';
 import LexEvent from './LexEvent';
 
 const lyricist = new Lyricist(process.env.GENIUS_ACCESS_TOKEN);
@@ -18,17 +19,18 @@ export async function handler(event: LexEvent, context: Context, callback: Callb
   try {
     console.log(`Event: ${JSON.stringify(event)}`);
 
-    let response = {};
+    const userProfile = await getUserProfile(event.userId, event.bot);
 
+    let response = {};
     switch (event.currentIntent.name) {
       case 'GetStarted':
-        response = await handleGetStarted(event);
+        response = await handleGetStarted(event, userProfile);
         break;
       case 'GetLyricData':
-        response = await handleGetLyricDataIntent(event, lyricist, spotifyApi);
+        response = await handleGetLyricDataIntent(event, userProfile, lyricist, spotifyApi);
         break;
       case 'WrongLyricData':
-        response = await handleWrongLyricDataIntent(event);
+        response = await handleWrongLyricDataIntent(event, userProfile);
         break;
       default:
         break;

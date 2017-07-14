@@ -1,7 +1,7 @@
 {
   "name": "scope-lex-handler",
   "version": "1.0.0",
-  "description": "AWS Lex/Facebook-powered bot that identifies songs from lyrics/titles",
+  "description": "AWS Lex/Facebook Messenger powered bot that identifies songs from lyrics/titles.",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon -e ts -w src/ -x 'ts-node src/'",
@@ -15,18 +15,19 @@
   "author": "Jordan Hornblow",
   "dependencies": {
     "lyricist": "^2.1.2",
+    "node-fetch": "^1.7.1",
     "spotify-web-api-node": "^2.4.0"
   },
   "devDependencies": {
     "@types/aws-lambda": "^0.0.14",
-    "@types/node": "^8.0.7",
+    "@types/node": "^8.0.12",
     "@types/node-fetch": "^1.6.7",
     "nodemon": "^1.11.0",
     "rimraf": "^2.6.1",
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",
     "tslint-config-airbnb": "^5.2.1",
-    "tsutils": "1.6.0",
+    "tsutils": "2.6.1",
     "typescript": "^2.4.1"
   }
 }

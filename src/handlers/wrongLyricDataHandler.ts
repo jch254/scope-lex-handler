@@ -1,5 +1,6 @@
 import LexEvent from '../LexEvent';
 import LexResponse from '../LexResponse';
+import UserProfile from '../UserProfile';
 
 export interface WrongLyricDataSlots {}
 
@@ -8,7 +9,7 @@ export interface WrongLyricDataIntent {
   slots: WrongLyricDataSlots;
 }
 
-export default async function wrongLyricDataHandler(event: LexEvent): Promise<LexResponse> {
+export default async function wrongLyricDataHandler(event: LexEvent, userProfile: UserProfile): Promise<LexResponse> {
   console.log('wrongLyricDataHandler');
   
   const currentGeniusMatches: any[] = event.sessionAttributes.currentGeniusMatches !== undefined ?
@@ -22,7 +23,8 @@ export default async function wrongLyricDataHandler(event: LexEvent): Promise<Le
         type: 'ElicitIntent',
         message: {
           contentType: 'PlainText',
-          content: 'Nothing is wrong, so try scope a song!',
+          content: `There doesn't seem to be anything wrong ${userProfile.first_name}... \
+Try scope another song. Please note that the 'wrong' command can only be used once per scope.`,
         },
       },
     };

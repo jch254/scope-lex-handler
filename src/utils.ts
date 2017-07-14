@@ -1,3 +1,7 @@
+import fetch, { Headers } from 'node-fetch';
+import { LexBot } from './LexEvent';
+import UserProfile, { defaultUserProfile } from './UserProfile';
+
 export const mapPitchClassToKey = (pitchClass: number): string => {
   switch (pitchClass) {
     case 0:
@@ -30,3 +34,41 @@ export const mapPitchClassToKey = (pitchClass: number): string => {
 };
 
 export const mapMode = (mode: number): string => (mode === 1 ? 'major' : 'minor');
+
+// TODO: Check with AWS why bot.alias is always null
+export async function getUserProfile(userId: string, bot: LexBot): Promise<UserProfile> {
+  const isMessengerUser = /^\d+$/.test(userId) && bot.version !== '$LATEST'; // TODO: bot.alias === 'prod'
+
+  if (!isMessengerUser) {
+    return defaultUserProfile;
+  }
+
+  try {
+    const url = `https://graph.facebook.com/v2.6/${userId}?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+
+    const requestHeaders = new Headers();
+    requestHeaders.append('Content-Type', 'application/json');
+
+    console.log(`Fetching Messenger profile for user ${userId}...`);
+
+    const response = await fetch(url, { method: 'GET', headers: requestHeaders });
+
+    if (response.ok) {
+      const profile: UserProfile = await response.json();
+      
+      console.log(`Successfully fetched Messenger profile for user ${userId}`);
+
+      return profile;
+    } else {
+      console.log(`Error fetching Messenger profile for user ${userId}`);
+
+      return defaultUserProfile;
+    }
+
+  } catch (err) {
+    console.log(err);
+    console.log(`Error fetching Messenger profile for user ${userId}`);
+
+    return defaultUserProfile;
+  }
+}
