@@ -1,11 +1,34 @@
-# Scope-lex-handler
+## [Scope](https://m.me/scopebot)
 
-AWS Lex/Facebook Messenger powered bot that identifies songs from lyrics/titles.
+[![Scope Vimeo demo](https://img.jch254.com/ScopeVimeo.png)](https://vimeo.com/225540115 "Scope Vimeo demo - Click to Watch!")
+
+Scope is a Facebook Messenger bot that identifies songs from lyrics/titles. 
+
+It's easy to scope a song - just send a message starting with 'scope' followed by the lyric/title you're after (e.g. scope waves). Scope will reply with details of the closest match. If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.
+
+Visit Scope at [https://m.me/scopebot](https://m.me/scopebot)
+
+## Technologies Used
+
+- Node.js
+- TypeScript
+- Terraform
+- Lex
+- Lambda
+- CodeBuild/CodePipeline
+- Facebook Messenger Platform
+- Spotify API
+- Genius API
+
+## What's next for Scope?
+
+- Add/improve sharing functionality
+- Add suggestions
+- Add more intents/interactions
+- Add Scope for other media - movies/TV/quotes etc.
+
+> _Do you fools listen to music or do you just skim through it? - JAY-Z_
 
 ### Deployment/Infrastructure
 
 Refer to the [/infrastructure](./infrastructure) directory.
-
-### TODO
-
-- Improve readmes and add how-to
