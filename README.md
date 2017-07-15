@@ -1,4 +1,4 @@
-## [Scope](https://m.me/scopebot)
+# [Scope](https://m.me/scopebot)
 
 [![Scope Vimeo demo](https://img.jch254.com/ScopeVimeo.png)](https://vimeo.com/225540115 "Scope Vimeo demo - Click to Watch!")
 
@@ -29,6 +29,6 @@ Hit up Scope at [https://m.me/scopebot](https://m.me/scopebot) or [https://faceb
 
 > _Do you fools listen to music or do you just skim through it? - JAY-Z_
 
-### Deployment/Infrastructure
+## Deployment/Infrastructure
 
 Refer to the [/infrastructure](./infrastructure) directory.
