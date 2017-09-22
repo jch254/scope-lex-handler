@@ -44,7 +44,6 @@ Hit up Scope at [https://m.me/scopebot](https://m.me/scopebot) or [https://faceb
 1. Configure event in [/src/test.ts](./src/test.ts) (see [/src/LexEvent.ts](./src/LexEvent.ts) for event structure)
 1. `yarn run test`
 
-
 ### Deployment/Infrastructure
 
 Refer to the [/infrastructure](./infrastructure) directory.
