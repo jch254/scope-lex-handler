@@ -38,8 +38,6 @@ phases:
       - export AWS_SECRET_ACCESS_KEY=`curl --silent http://169.254.170.2:80$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq -r '.SecretAccessKey'`
       - export AWS_SESSION_TOKEN=`curl --silent http://169.254.170.2:80$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq -r '.Token'`
 
-      - export TF_VAR_environment_variables="{ SPOTIFY_CLIENT_ID = $SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET = $SPOTIFY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN = $GENIUS_ACCESS_TOKEN, PAGE_ACCESS_TOKEN = $PAGE_ACCESS_TOKEN }"
-
   build:
     commands:
       - ./infrastructure/build-artifacts.bash

@@ -55,6 +55,45 @@ module "codebuild_project" {
   source_location = "${var.source_location}"
 }
 
+resource "aws_iam_role" "role" {
+  name = "${var.name}"
+
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": "sts:AssumeRole",
+      "Principal": {
+        "Service": "lambda.amazonaws.com"
+      },
+      "Effect": "Allow"
+    }
+  ]
+}
+EOF
+}
+
+resource "aws_iam_role_policy" "policy" {
+  name = "${var.name}"
+  role = "${aws_iam_role.role.name}"
+
+  policy = <<POLICY
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Resource": "*",
+      "Action": [
+        "logs:*"
+      ]
+    }
+  ]
+}
+POLICY
+}
+
 module "lambda_function" {
   source = "github.com/jch254/terraform-modules//lambda-function?ref=1.0.1"
 
@@ -62,5 +101,6 @@ module "lambda_function" {
   artifacts_dir = "${var.artifacts_dir}"
   runtime = "${var.runtime}"
   handler = "${var.handler}"
+  role_arn = "${aws_iam_role.role.arn}"
   environment_variables = "${var.environment_variables}"
 }

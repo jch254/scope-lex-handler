@@ -11,6 +11,7 @@ logs
 typings.json
 npm-debug.log
 yarn-error.log
-terraform.tfstate*
+*.tfstate*
+*.tfplan*
 src/**/*.js
 artifacts.zip
