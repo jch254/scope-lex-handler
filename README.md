@@ -8,19 +8,19 @@ It's easy to scope a song - just send a message starting with 'scope' followed b
 
 Hit up Scope at [https://m.me/scopebot](https://m.me/scopebot) or [https://facebook.com/scopebot](https://facebook.com/scopebot)
 
-## Technologies Used
+### Technologies Used
 
 - Node.js
 - TypeScript
 - Terraform
 - Lex
 - Lambda
-- CodeBuild/CodePipeline
+- CodeBuild
 - Facebook Messenger Platform
 - Spotify API
 - Genius API
 
-## What's next for Scope?
+### What's next for Scope?
 
 - Add/improve sharing functionality
 - Add suggestions
@@ -29,6 +29,22 @@ Hit up Scope at [https://m.me/scopebot](https://m.me/scopebot) or [https://faceb
 
 > _Do you fools listen to music or do you just skim through it? - JAY-Z_
 
-## Deployment/Infrastructure
+---
+
+### Environment variables
+
+- SPOTIFY_CLIENT_ID
+- SPOTIFY_CLIENT_SECRET
+- GENIUS_ACCESS_TOKEN
+- PAGE_ACCESS_TOKEN
+
+### Running locally (with hot reloading)
+
+1. Set environment variables listed above
+1. Configure event in [/src/test.ts](./src/test.ts) (see [/src/LexEvent.ts](./src/LexEvent.ts) for event structure)
+1. `yarn run test`
+
+
+### Deployment/Infrastructure
 
 Refer to the [/infrastructure](./infrastructure) directory.

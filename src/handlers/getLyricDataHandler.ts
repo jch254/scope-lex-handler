@@ -137,7 +137,7 @@ Try scope another lyric or title.`,
 
   const fullGeniusSong = await lyricist.song(
     intent.slots.geniusSongId !== null ? intent.slots.geniusSongId : geniusMatches[0].id,
-    { fetchLyrics: false },
+    { fetchLyrics: false, textFormat: 'plain' },
   );
 
   console.log(`fullGeniusSong: ${JSON.stringify(fullGeniusSong)}`);

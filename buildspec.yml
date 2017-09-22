@@ -1,21 +1,27 @@
+# All commands below are run from root directory of repository by CodeBuild
 version: 0.2
 
 env:
   variables:
-    TF_VAR_remote_state_bucket: "603-terraform-remote-state"
-    TF_VAR_remote_state_region: "ap-southeast-2"
     TF_VAR_region: "us-east-1"
     TF_VAR_name: "scope-lex-handler"
-    TF_VAR_build_docker_image: "jch254/docker-node-terraform-aws"
-    TF_VAR_build_docker_tag: "6.10.0"
-    TF_VAR_github_repository_owner: "jch254"
-    TF_VAR_github_repository_name: "scope-lex-handler"
-    TF_VAR_github_branch_name: "master"
-    TF_VAR_artifacts_dir: "../dist" # executed from /infrastruture directory
-    TF_VAR_runtime: "nodejs6.10"
-    TF_VAR_handler: "index.handler"
     TF_VAR_kms_key_arns: '["arn:aws:kms:us-east-1:982898479788:key/3dc41364-c3e6-4544-8e39-c5f4780d19cd","arn:aws:kms:us-east-1:982898479788:key/e83f1d78-5dc5-4aca-a00b-2fc2ac7bebe4"]'
     TF_VAR_ssm_parameter_arns: '["arn:aws:ssm:us-east-1:982898479788:parameter/scope-lex-handler/*","arn:aws:ssm:us-east-1:982898479788:parameter/shared/*"]'
+    TF_VAR_build_docker_image: "jch254/docker-node-terraform-aws"
+    TF_VAR_build_docker_tag: "6.10.0"
+    TF_VAR_buildspec: "buildspec.yml"
+    TF_VAR_source_location: "https://github.com/jch254/scope-lex-handler.git"
+    TF_VAR_artifacts_dir: "../dist"
+    TF_VAR_runtime: "nodejs6.10"
+    TF_VAR_handler: "index.handler"
+    REMOTE_STATE_BUCKET: "603-terraform-remote-state"
+    REMOTE_STATE_REGION: "ap-southeast-2"
+  parameter-store:
+    SPOTIFY_CLIENT_ID: "/scope-lex-handler/spotify-client-id"
+    SPOTIFY_CLIENT_SECRET: "/scope-lex-handler/spotify-client-secret"
+    GENIUS_ACCESS_TOKEN: "/scope-lex-handler/genius-access-token"
+    PAGE_ACCESS_TOKEN: "/scope-lex-handler/page-access-token"
+    TF_VAR_github_oauth_token: "/shared/github-token"
 
 phases:
   install:
@@ -32,13 +38,7 @@ phases:
       - export AWS_SECRET_ACCESS_KEY=`curl --silent http://169.254.170.2:80$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq -r '.SecretAccessKey'`
       - export AWS_SESSION_TOKEN=`curl --silent http://169.254.170.2:80$AWS_CONTAINER_CREDENTIALS_RELATIVE_URI | jq -r '.Token'`
 
-      - SPOTIFY_CLIENT_ID=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/spotify-client-id" --with-decryption --query Parameters[0].Value)
-      - SPOTIFY_CLIENT_SECRET=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/spotify-client-secret" --with-decryption --query Parameters[0].Value)
-      - GENIUS_ACCESS_TOKEN=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/genius-access-token" --with-decryption --query Parameters[0].Value)
-      - PAGE_ACCESS_TOKEN=$(aws ssm get-parameters --region $TF_VAR_region --name "/scope-lex-handler/page-access-token" --with-decryption --query Parameters[0].Value)
       - export TF_VAR_environment_variables="{ SPOTIFY_CLIENT_ID = $SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET = $SPOTIFY_CLIENT_SECRET, GENIUS_ACCESS_TOKEN = $GENIUS_ACCESS_TOKEN, PAGE_ACCESS_TOKEN = $PAGE_ACCESS_TOKEN }"
-
-      - export TF_VAR_github_oauth_token=$(aws ssm get-parameters --region $TF_VAR_region --name "/shared/github-token" --with-decryption --query Parameters[0].Value --output text)
 
   build:
     commands:

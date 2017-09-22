@@ -23,14 +23,12 @@ export default async function wrongLyricDataHandler(event: LexEvent, userProfile
         type: 'ElicitIntent',
         message: {
           contentType: 'PlainText',
-          content: `Nothing appears to be wrong ${userProfile.first_name}... \
-Try scope another lyric or title. Please note that the 'wrong' command can only be used once per scope.`,
+          content: `Nothing appears to be wrong ${userProfile.first_name}... Try scope another lyric or title.`,
         },
       },
     };
   } else {
     return {
-      sessionAttributes: {},
       dialogAction: {
         type: 'ElicitIntent',
         message: {

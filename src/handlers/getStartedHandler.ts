@@ -26,7 +26,9 @@ It's easy to scope a song - just send a message starting with 'scope' followed b
 (e.g. scope waves). Scope will reply with details of the closest match. \
 Try including the artist's name for extra accuracy.
 
-If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.`,
+If Scope matches the wrong song, simply reply with the word 'wrong' to select from the next best matches.
+
+Scope is currently English only.`,
       },
       responseCard: {
         contentType: 'application/vnd.amazonaws.card.generic',
