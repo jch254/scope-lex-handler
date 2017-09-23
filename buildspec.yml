@@ -41,5 +41,4 @@ phases:
   build:
     commands:
       - ./infrastructure/build-artifacts.bash
-      - ./infrastructure/run-tests.bash
       - ./infrastructure/deploy-infrastructure.bash
