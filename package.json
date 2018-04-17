@@ -4,8 +4,8 @@
   "description": "AWS Lex/Facebook Messenger powered bot that identifies songs from lyrics/titles.",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon -e ts -w src/ -x 'ts-node src/'",
-    "test": "nodemon -e ts -w src/ -x 'ts-node src/test.ts'",
+    "dev": "nodemon -e ts -w src/ -x 'ts-node src/simulate.ts'",
+    "test": "echo TODO!",
     "build": "cross-env NODE_ENV=production rimraf dist/ && tsc",
     "lint": "tslint --type-check --project tsconfig.json || exit 0"
   },
@@ -16,22 +16,22 @@
   "author": "Jordan Hornblow",
   "dependencies": {
     "lyricist": "^2.2.2",
-    "node-fetch": "^1.7.3",
-    "spotify-web-api-node": "^2.5.0"
+    "node-fetch": "^2.1.2",
+    "spotify-web-api-node": "^3.0.0"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^0.0.16",
-    "@types/node": "^8.0.29",
-    "@types/node-fetch": "^1.6.7",
-    "@types/uuid": "^3.4.2",
-    "cross-env": "^5.0.5",
-    "nodemon": "^1.12.1",
+    "@types/aws-lambda": "^8.10.1",
+    "@types/node": "^9.6.5",
+    "@types/node-fetch": "^1.6.8",
+    "@types/uuid": "^3.4.3",
+    "cross-env": "^5.1.4",
+    "nodemon": "^1.17.3",
     "rimraf": "^2.6.2",
-    "ts-node": "^3.3.0",
-    "tslint": "^5.7.0",
-    "tslint-config-airbnb": "^5.3.0",
-    "tsutils": "2.8.2",
-    "typescript": "^2.5.2",
-    "uuid": "^3.1.0"
+    "ts-node": "^5.0.1",
+    "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.8.0",
+    "tsutils": "2.26.1",
+    "typescript": "^2.8.1",
+    "uuid": "^3.2.1"
   }
 }
