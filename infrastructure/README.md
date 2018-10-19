@@ -1,6 +1,6 @@
 # Deployment/Infrastructure
 
-Scope-lex-handler is a Lambda function built, tested and deployed to AWS by [codebuild-github-webhook](https://github.com/jch254/codebuild-github-webhook) and CodeBuild.
+Scope-lex-handler is a Lambda function built, tested and deployed to AWS by CodeBuild.
 
 ---
 

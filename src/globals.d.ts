@@ -1,2 +1,2 @@
 declare module 'spotify-web-api-node';
-declare module 'lyricist/node6';
+declare module 'lyricist';

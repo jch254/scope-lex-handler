@@ -23,5 +23,5 @@ handler(
     },
   },
   { awsRequestId: uuidv4() } as Context,
-  () => {},
+  () => { },
 );

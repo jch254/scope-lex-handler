@@ -1,5 +1,6 @@
+/// <reference path="globals.d.ts" />
 import { Callback, Context } from 'aws-lambda';
-import * as Lyricist from 'lyricist/node6';
+import * as Lyricist from 'lyricist';
 import * as SpotifyWebApi from 'spotify-web-api-node';
 
 import handleGetLyricDataIntent from './handlers/getLyricDataHandler';
@@ -49,7 +50,7 @@ export async function handler(event: LexEvent, context: Context, callback: Callb
         fulfillmentState: 'Failed',
         message: {
           contentType: 'PlainText',
-          content: `Damn! Scope is having trouble right now... Try scope another lyric or title or come back later.`,
+          content: 'Damn! Scope is having trouble right now... Try scope another lyric or title or come back later.',
         },
       },
     };

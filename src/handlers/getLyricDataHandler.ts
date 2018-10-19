@@ -116,7 +116,7 @@ export default async function getLyricDataHandler(
   let geniusMatches: any[] = [];
   if (intent.slots.lyric !== null) {
     geniusMatches = await lyricist.search(intent.slots.lyric);
-   
+
     console.log(`geniusMatches: ${JSON.stringify(geniusMatches)}`);
 
     if (geniusMatches.length === 0) {
@@ -158,11 +158,11 @@ Try scope another lyric or title.`,
       audioFeatures = audioFeaturesResponse.body;
     } else {
       const spotifyTracks = await spotifyApi.searchTracks(
-`track:${fullGeniusSong.title.trim()} \
+        `track:${fullGeniusSong.title.trim()} \
 artist:${fullGeniusSong.primary_artist.name.trim()}\
 ${fullGeniusSong.album !== null ? ` album:${fullGeniusSong.album.name.trim()}` : ''} \
 ${fullGeniusSong.release_date !== null ? ` year:${fullGeniusSong.release_date.substring(0, 4)}` : ''}`,
-{ limit : 1 });
+        { limit: 1 });
 
       console.log(`spotifyTracks: ${JSON.stringify(spotifyTracks)}`);
 
@@ -202,7 +202,7 @@ ${fullGeniusSong.release_date !== null ? ` year:${fullGeniusSong.release_date.su
   attachments.push(getAttachment(fullGeniusSong, fullGeniusSong.url));
 
   const currentGeniusMatches = intent.slots.geniusSongId === null ?
-     geniusMatches
+    geniusMatches
       .slice(1, Math.min(geniusMatches.length, 11))
       .map(song => ({
         id: song.id,
@@ -211,7 +211,7 @@ ${fullGeniusSong.release_date !== null ? ` year:${fullGeniusSong.release_date.su
         imageUrl: song.song_art_image_thumbnail_url,
         url: song.url,
       })) :
-      undefined;
+    undefined;
 
   return {
     sessionAttributes: currentGeniusMatches !== undefined ?

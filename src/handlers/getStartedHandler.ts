@@ -2,7 +2,7 @@ import LexEvent from '../LexEvent';
 import LexResponse from '../LexResponse';
 import UserProfile from '../UserProfile';
 
-export interface GetStartedSlots {}
+export interface GetStartedSlots { }
 
 export interface GetStartedIntent {
   name: 'GetStarted';
@@ -11,7 +11,7 @@ export interface GetStartedIntent {
 
 export default async function getStartedHandler(event: LexEvent, userProfile: UserProfile): Promise<LexResponse> {
   console.log('getStartedHandler');
-  
+
   return {
     sessionAttributes: {},
     dialogAction: {
@@ -39,11 +39,10 @@ Scope is currently English only.`,
           imageUrl: 'https://img.jch254.com/Scope.jpg',
           buttons: [{
             text: 'Scope waves',
-            value: `Scope waves`,
+            value: 'Scope waves',
           }],
         }],
       },
     },
   };
 }
-

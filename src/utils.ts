@@ -55,15 +55,15 @@ export async function getUserProfile(userId: string, bot: LexBot): Promise<UserP
 
     if (response.ok) {
       const profile: UserProfile = await response.json();
-      
+
       console.log(`Successfully fetched Messenger profile for user ${userId}`);
 
       return profile;
-    } else {
-      console.log(`Error fetching Messenger profile for user ${userId}`);
-
-      return defaultUserProfile;
     }
+
+    console.log(`Error fetching Messenger profile for user ${userId}`);
+
+    return defaultUserProfile;
 
   } catch (err) {
     console.log(err);
