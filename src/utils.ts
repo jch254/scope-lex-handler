@@ -44,7 +44,7 @@ export async function getUserProfile(userId: string, bot: LexBot): Promise<UserP
   }
 
   try {
-    const url = `https://graph.facebook.com/v2.6/${userId}?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
+    const url = `https://graph.facebook.com/v2.8/${userId}?access_token=${process.env.PAGE_ACCESS_TOKEN}`;
 
     const requestHeaders = new Headers();
     requestHeaders.append('Content-Type', 'application/json');
