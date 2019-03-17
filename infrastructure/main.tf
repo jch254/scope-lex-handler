@@ -44,7 +44,7 @@ resource "aws_iam_role_policy" "codebuild_policy" {
 }
 
 module "codebuild_project" {
-  source = "github.com/jch254/terraform-modules//codebuild-project?ref=1.0.1"
+  source = "github.com/jch254/terraform-modules//codebuild-project?ref=1.0.4"
 
   name               = "${var.name}"
   codebuild_role_arn = "${aws_iam_role.codebuild_role.arn}"
@@ -53,6 +53,7 @@ module "codebuild_project" {
   source_type        = "${var.source_type}"
   buildspec          = "${var.buildspec}"
   source_location    = "${var.source_location}"
+  cache_bucket       = "${var.cache_bucket}"
 }
 
 resource "aws_codebuild_webhook" "codebuild_webhook" {
@@ -100,7 +101,7 @@ POLICY
 }
 
 module "lambda_function" {
-  source = "github.com/jch254/terraform-modules//lambda-function?ref=1.0.1"
+  source = "github.com/jch254/terraform-modules//lambda-function?ref=1.0.4"
 
   name                  = "${var.name}"
   artifacts_dir         = "${var.artifacts_dir}"
