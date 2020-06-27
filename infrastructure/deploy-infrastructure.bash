@@ -4,7 +4,7 @@ echo Deploying infrastructure via Terraform...
 
 cd infrastructure
 
-export TF_VAR_environment_variables='[{variables={SPOTIFY_CLIENT_ID="'$SPOTIFY_CLIENT_ID'",SPOTIFY_CLIENT_SECRET="'$SPOTIFY_CLIENT_SECRET'",GENIUS_ACCESS_TOKEN="'$GENIUS_ACCESS_TOKEN'",PAGE_ACCESS_TOKEN="'$PAGE_ACCESS_TOKEN'"}}]'
+export TF_VAR_environment_variables='{SPOTIFY_CLIENT_ID="'$SPOTIFY_CLIENT_ID'",SPOTIFY_CLIENT_SECRET="'$SPOTIFY_CLIENT_SECRET'",GENIUS_ACCESS_TOKEN="'$GENIUS_ACCESS_TOKEN'",PAGE_ACCESS_TOKEN="'$PAGE_ACCESS_TOKEN'"}'
 
 terraform init \
   -backend-config "bucket=${REMOTE_STATE_BUCKET}" \

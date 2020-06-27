@@ -54,6 +54,6 @@ variable "handler" {
 
 variable "environment_variables" {
   description = "A map that defines environment variables for the Lambda function"
-  type        = "list"
-  default     = []
+  type        = map(string)
+  default     = {}
 }

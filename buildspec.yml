@@ -8,12 +8,12 @@ env:
     TF_VAR_kms_key_arns: '["arn:aws:kms:us-east-1:982898479788:key/3dc41364-c3e6-4544-8e39-c5f4780d19cd","arn:aws:kms:us-east-1:982898479788:key/e83f1d78-5dc5-4aca-a00b-2fc2ac7bebe4"]'
     TF_VAR_ssm_parameter_arns: '["arn:aws:ssm:us-east-1:982898479788:parameter/scope-lex-handler/*","arn:aws:ssm:us-east-1:982898479788:parameter/shared/*"]'
     TF_VAR_build_docker_image: "jch254/docker-node-terraform-aws"
-    TF_VAR_build_docker_tag: "8.10.0"
+    TF_VAR_build_docker_tag: "12.x"
     TF_VAR_buildspec: "buildspec.yml"
     TF_VAR_source_location: "https://github.com/jch254/scope-lex-handler.git"
     TF_VAR_cache_bucket: "603-codebuild-cache/scope-lex-handler"
     TF_VAR_artifacts_dir: "../dist"
-    TF_VAR_runtime: "nodejs8.10"
+    TF_VAR_runtime: "nodejs12.x"
     TF_VAR_handler: "index.handler"
     REMOTE_STATE_BUCKET: "603-terraform-remote-state"
     REMOTE_STATE_REGION: "ap-southeast-2"
