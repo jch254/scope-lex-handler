@@ -17,6 +17,7 @@ env:
     TF_VAR_handler: "index.handler"
     REMOTE_STATE_BUCKET: "603-terraform-remote-state"
     REMOTE_STATE_REGION: "ap-southeast-2"
+    GRAPH_API_VERSION: "v7.0"
   parameter-store:
     SPOTIFY_CLIENT_ID: "/scope-lex-handler/spotify-client-id"
     SPOTIFY_CLIENT_SECRET: "/scope-lex-handler/spotify-client-secret"
